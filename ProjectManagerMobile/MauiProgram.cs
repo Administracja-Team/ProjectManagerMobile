@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using DevExpress.Maui;
+using Microsoft.Extensions.Logging;
+using ProjectManagerMobile.Utilities.Extensions;
 
 namespace ProjectManagerMobile;
 
@@ -9,7 +12,13 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
+            .UseMauiCommunityToolkit()
+			.UseDevExpress()
+			.UseDevExpressCollectionView()
+			.RegisterServices()
+			.RegisterViews()
+			.RegisterViewModels()
+            .ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
