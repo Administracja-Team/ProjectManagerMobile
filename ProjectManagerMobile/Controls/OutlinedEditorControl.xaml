@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:handlers="clr-namespace:ProjectManagerMobile.Handlers"
+      x:Name="this"
+      x:Class="ProjectManagerMobile.Controls.OutlinedEditorControl">
+
+    <Border x:Name="MainBorder"
+            Grid.Row="0"
+            Padding="10,3"
+            StrokeShape="RoundRectangle 12"
+            StrokeThickness="1.5"
+            Stroke="{Binding Source={x:Reference this}, Path=UnfocusColor}">
+
+        <handlers:BorderlessEditor x:Name="EditorField"
+                AutoSize="TextChanges"
+                Focused="EditorField_Focused"
+                FontSize="{Binding Source={x:Reference this}, Path=FontSize}"
+                FontFamily="{Binding Source={x:Reference this}, Path=FontFamily}"
+                TextColor="{Binding Source={x:Reference this}, Path=TextColor}"
+                IsReadOnly="{Binding Source={x:Reference this}, Path=IsReadOnly}"
+                Unfocused="EditorField_Unfocused"
+                Text="{Binding Source={x:Reference this}, Path=Text}" />
+
+    </Border>
+
+    <Label x:Name="PlaceholderLabel"
+           Grid.Row="0"
+           FontSize="{Binding Source={x:Reference this}, Path=FontSize}"
+           FontFamily="{Binding Source={x:Reference this}, Path=FontFamily}"
+           Margin="12,17,0,0"
+           Padding="5,0"
+           TextColor="{Binding Source={x:Reference this}, Path=UnfocusColor}"
+           Text="{Binding Source={x:Reference this}, Path=Placeholder}"
+           BackgroundColor="{Binding Source={x:Reference this}, Path=PlaceholderBackgroundColor}"
+           HorizontalOptions="StartAndExpand"
+           VerticalOptions="Start" />
+
+    <Grid.GestureRecognizers>
+        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+    </Grid.GestureRecognizers>
+</Grid>

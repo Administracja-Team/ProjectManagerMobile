@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using DevExpress.Maui;
+using FluentIcons.Maui;
 using Microsoft.Extensions.Logging;
 using ProjectManagerMobile.Utilities.Extensions;
 
@@ -15,6 +16,7 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
 			.UseDevExpress()
 			.UseDevExpressCollectionView()
+			.UseFluentIcons()
 			.RegisterServices()
 			.RegisterViews()
 			.RegisterViewModels()
@@ -22,7 +24,11 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
+
+                fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular");
+                fonts.AddFont("SourceSans3-Regular.ttf", "SourceSansRegular");
+                fonts.AddFont("SourceSans3-Bold.ttf", "SourceSansBold");
+            });
 
 #if DEBUG
 		builder.Logging.AddDebug();

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProjectManagerMobile.Views.Auth.AuthPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:ProjectManagerMobile.Controls"
+    xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    BackgroundColor="{DynamicResource PrimaryColor}"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False">
+    <Grid x:Name="MainGrid" RowDefinitions="*, 4*">
+
+        <Label
+            x:Name="ProjectManagerLabel"
+            Grid.Row="0"
+            FontFamily="SourceSansBold"
+            FontSize="44"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            LineHeight="0.6"
+            Text="Project&#10;manager"
+            TextColor="{DynamicResource OnPrimaryColor}"
+            TranslationY="50"
+            VerticalOptions="Center" />
+
+        <Label
+            x:Name="SignUpLabel"
+            Grid.Row="0"
+            FontFamily="SourceSansBold"
+            FontSize="44"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            IsVisible="False"
+            LineHeight="0.6"
+            Opacity="0"
+            Text="Sign up"
+            TextColor="{DynamicResource OnPrimaryColor}"
+            VerticalOptions="Center" />
+
+        <ImageButton
+            x:Name="BackButton"
+            Margin="20"
+            Clicked="GoToLogin_Clicked"
+            CornerRadius="24"
+            HeightRequest="40"
+            HorizontalOptions="Start"
+            IsVisible="False"
+            Opacity="0"
+            WidthRequest="40">
+            <ImageButton.Source>
+                <ic:FluentImageSource
+                    Icon="ChevronLeft"
+                    IconVariant="Filled"
+                    Color="{DynamicResource OnPrimaryColor}" />
+            </ImageButton.Source>
+        </ImageButton>
+
+        <Border
+            x:Name="MainBorder"
+            Grid.Row="1"
+            BackgroundColor="{DynamicResource SecondaryBackgroundColor}"
+            StrokeShape="RoundRectangle 36,36,0,0"
+            TranslationY="100">
+            <Grid>
+                <VerticalStackLayout
+                    x:Name="LoginLayout"
+                    Padding="40"
+                    Spacing="10">
+                    <Label
+                        Margin="0,0,0,20"
+                        FontAttributes="Bold"
+                        FontFamily="SourceSansRegular"
+                        FontSize="32"
+                        Text="Login"
+                        TextColor="{DynamicResource PrimaryTextColor}" />
+
+
+                    <controls:FilledEntryControl
+                        FocusColor="{DynamicResource PrimaryTextColor}"
+                        FontSize="18" Text="{Binding UsernameEmail}"
+                        Placeholder="Username or e-mail"
+                        PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                        PlaceholderFontSize="12"
+                        TextColor="{DynamicResource SecondaryTextColor}"
+                        UnfocusColor="{DynamicResource SecondaryTextColor}" />
+
+                    <controls:FilledEntryControl
+                        FocusColor="{DynamicResource PrimaryTextColor}"
+                        FontSize="18" Text="{Binding Password}"
+                        IsPassword="True"
+                        Placeholder="Password"
+                        PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                        PlaceholderFontSize="12"
+                        TextColor="{DynamicResource SecondaryTextColor}"
+                        UnfocusColor="{DynamicResource SecondaryTextColor}" />
+
+                    <Button
+                        Padding="0"
+                        BackgroundColor="Transparent"
+                        Clicked="GoToRegister_Clicked"
+                        CornerRadius="28"
+                        FontFamily="SourceSansRegular"
+                        Text="create an account"
+                        TextColor="{DynamicResource PrimaryTextColor}" />
+
+                    <Button
+                        Margin="0,30,0,0"
+                        Padding="0,15"
+                        BackgroundColor="{DynamicResource PrimaryColor}"
+                        CornerRadius="28"
+                        FontFamily="SourceSansRegular"
+                        FontSize="18"
+                        Text="Sign in" Command="{Binding LoginCommand}"
+                        TextColor="{DynamicResource OnPrimaryColor}" />
+                </VerticalStackLayout>
+
+
+
+
+
+
+
+                <VerticalStackLayout
+                    x:Name="RegisterLayout"
+                    Padding="40,60,40,0"
+                    IsVisible="false"
+                    Opacity="0"
+                    Spacing="10">
+                    <controls:FilledEntryControl
+                        FocusColor="{DynamicResource PrimaryTextColor}"
+                        FontSize="18" Text="{Binding Username}"
+                        Placeholder="Username"
+                        PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                        PlaceholderFontSize="12"
+                        TextColor="{DynamicResource SecondaryTextColor}"
+                        UnfocusColor="{DynamicResource SecondaryTextColor}" />
+
+                    <controls:FilledEntryControl
+                        FocusColor="{DynamicResource PrimaryTextColor}"
+                        FontSize="18"
+                        Placeholder="First Name" Text="{Binding FirstName}"
+                        PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                        PlaceholderFontSize="12"
+                        TextColor="{DynamicResource SecondaryTextColor}"
+                        UnfocusColor="{DynamicResource SecondaryTextColor}" />
+
+                    <controls:FilledEntryControl
+                        FocusColor="{DynamicResource PrimaryTextColor}"
+                        FontSize="18"
+                        Placeholder="Last Name" Text="{Binding LastName}"
+                        PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                        PlaceholderFontSize="12"
+                        TextColor="{DynamicResource SecondaryTextColor}"
+                        UnfocusColor="{DynamicResource SecondaryTextColor}" />
+
+                    <controls:FilledEntryControl
+                        FocusColor="{DynamicResource PrimaryTextColor}"
+                        FontSize="18" Text="{Binding Email}"
+                        Placeholder="E-mail" Keyboard="Email"
+                        PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                        PlaceholderFontSize="12"
+                        TextColor="{DynamicResource SecondaryTextColor}"
+                        UnfocusColor="{DynamicResource SecondaryTextColor}" />
+
+                    <controls:FilledEntryControl
+                        FocusColor="{DynamicResource PrimaryTextColor}"
+                        FontSize="18" Text="{Binding Password}"
+                        IsPassword="True"
+                        Placeholder="Password"
+                        PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                        PlaceholderFontSize="12"
+                        TextColor="{DynamicResource SecondaryTextColor}"
+                        UnfocusColor="{DynamicResource SecondaryTextColor}" />
+
+                    <controls:FilledEntryControl
+                        FocusColor="{DynamicResource PrimaryTextColor}"
+                        FontSize="18"
+                        IsPassword="True" Text="{Binding PasswordRepeat}"
+                        Placeholder="Password repeat"
+                        PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                        PlaceholderFontSize="12"
+                        TextColor="{DynamicResource SecondaryTextColor}"
+                        UnfocusColor="{DynamicResource SecondaryTextColor}" />
+
+                    <Button
+                        Margin="0,30,0,0"
+                        Padding="0,15"
+                        BackgroundColor="{DynamicResource PrimaryColor}"
+                        CornerRadius="28"
+                        FontFamily="SourceSansRegular"
+                        FontSize="18" Command="{Binding CreateAccountCommand}"
+                        Text="Create an account"
+                        TextColor="{DynamicResource OnPrimaryColor}" />
+                </VerticalStackLayout>
+            </Grid>
+
+        </Border>
+
+        <Border
+            x:Name="ProfileImageButton"
+            Grid.Row="1"
+            HeightRequest="100"
+            IsVisible="False"
+            Opacity="0"
+            Stroke="Transparent"
+            StrokeShape="RoundRectangle 50"
+            TranslationY="-50"
+            VerticalOptions="Start"
+            WidthRequest="100">
+            <ImageButton Padding="20" BackgroundColor="{DynamicResource SecondaryColor}">
+                <ImageButton.Source>
+                    <ic:FluentImageSource
+                        Icon="Add"
+                        IconVariant="Filled"
+                        Color="{DynamicResource OnPrimaryColor}" />
+                </ImageButton.Source>
+            </ImageButton>
+        </Border>
+
+    </Grid>
+
+</ContentPage>

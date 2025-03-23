@@ -3,13 +3,26 @@
     x:Class="ProjectManagerMobile.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:ProjectManagerMobile"
+    xmlns:views="clr-namespace:ProjectManagerMobile.Views"
+    xmlns:auth="clr-namespace:ProjectManagerMobile.Views.Auth"
+    Shell.BackgroundColor="#1D5C57"
     Shell.FlyoutBehavior="Flyout"
     Title="ProjectManagerMobile">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        ContentTemplate="{DataTemplate auth:AuthPage}"
+        Route="AuthPage" />
+
+    <ShellContent
+        ContentTemplate="{DataTemplate views:ProjectsListPage}"
+        Route="ProjectsListPage" />
+
+    <ShellContent
+        ContentTemplate="{DataTemplate views:ProfilePage}"
+        Route="ProfilePage" />
+
+    <ShellContent
+        ContentTemplate="{DataTemplate views:SettingsPage}"
+        Route="SettingsPage" />
 
 </Shell>
