@@ -2,10 +2,16 @@
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ProjectManagerMobile.Models.DTO;
+using ProjectManagerMobile.Services;
+using ProjectManagerMobile.Services.Interfaces;
+using ProjectManagerMobile.Utilities;
+using ProjectManagerMobile.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -13,9 +19,13 @@ namespace ProjectManagerMobile.ViewModels.Auth
 {
     public partial class RegisterViewModel : BaseViewModel
     {
-        public RegisterViewModel()
+        private IAuthApi _authApi;
+        private TokenStorageService _tokenStorageService;
+
+        public RegisterViewModel(IAuthApi authApi, TokenStorageService tokenStorageService)
         {
-            
+            _authApi = authApi;
+            _tokenStorageService = tokenStorageService;
         }
 
         [ObservableProperty]
@@ -47,7 +57,30 @@ namespace ProjectManagerMobile.ViewModels.Auth
 
             try
             {
+                IsBusy = true;
 
+                var regRequest = new UserRegistrationRequest
+                {
+                    Username = Username,
+                    Name = FirstName,
+                    Surname = LastName,
+                    Email = Email,
+                    Password = Password,
+                    LanguageCode = AppSettings.GetCurrentLanguageCode()
+                };
+
+                var response = await _authApi.RegisterUser(regRequest, null);
+                if (response.IsSuccessStatusCode)
+                {
+                    var tokenData = response.Content;
+                    await _tokenStorageService.SaveUserSession(tokenData);
+                    
+                    await Shell.Current.GoToAsync($"//{nameof(ProjectsListPage)}");
+                }
+                else
+                {
+                    await Toast.Make(JsonSerializer.Deserialize<ErrorResponse>(response.Error.Content).Message).Show();
+                }
             }
             catch (Exception ex)
             {
@@ -55,7 +88,7 @@ namespace ProjectManagerMobile.ViewModels.Auth
             }
             finally
             {
-
+                IsBusy = false;
             }
         }
 

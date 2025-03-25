@@ -1,7 +1,11 @@
-﻿using ProjectManagerMobile.ViewModels;
+﻿using AiForms.Settings;
+using ProjectManagerMobile.Services;
+using ProjectManagerMobile.Services.Interfaces;
+using ProjectManagerMobile.ViewModels;
 using ProjectManagerMobile.ViewModels.Auth;
 using ProjectManagerMobile.Views;
 using ProjectManagerMobile.Views.Auth;
+using Refit;
 
 namespace ProjectManagerMobile.Utilities.Extensions
 {
@@ -31,7 +35,17 @@ namespace ProjectManagerMobile.Utilities.Extensions
         }
         public static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
         {
-            //builder.Services.AddTransient<MainPage>();
+            builder.Services.AddSingleton<TokenStorageService>();
+
+            builder.Services
+            .AddRefitClient<IAuthApi>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://138.201.187.238:8888"));
+
+            builder.Services
+                .AddRefitClient<IUserApi>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://138.201.187.238:8888"));
+
+
 
             return builder;
         }

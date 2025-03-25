@@ -1,12 +1,52 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProjectManagerMobile.Views.SettingsPage"
-             Title="SettingsPage">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" BackgroundColor="{DynamicResource SecondaryBackgroundColor}"
+             x:Class="ProjectManagerMobile.Views.SettingsPage" xmlns:sv="clr-namespace:AiForms.Settings;assembly=SettingsView" 
+             Title="Settings"  xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="sv:SettingsView">
+                <Setter Property="ShowSectionTopBottomBorder" Value="False" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryBackgroundColor}" />
+                <Setter Property="CellBackgroundColor" Value="{AppThemeBinding Light={DynamicResource SecondaryBackgroundColor}, Dark={DynamicResource PrimaryBackgroundColor}}" />
+                <Setter Property="CellTitleColor" Value="{DynamicResource PrimaryTextColor}" />
+                <Setter Property="CellDescriptionColor" Value="{DynamicResource SecondaryTextColor}" />
+                <Setter Property="CellAccentColor" Value="{DynamicResource TertiaryTextColor}" />
+                <Setter Property="HeaderTextColor" Value="{DynamicResource TertiaryTextColor}" />
+                <Setter Property="SelectedColor" Value="{DynamicResource SecondaryColor}" />
+                <Setter Property="CellTitleFontSize" Value="18" />
+                <Setter Property="HeaderFontSize" Value="20" />
+            </Style>
+        </ResourceDictionary>
+
+        <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    </ContentPage.Resources>
+
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <sv:SettingsView HasUnevenRows="True" HeaderPadding="10" Grid.Row="1" IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
+            <sv:Section Title="Theme" sv:RadioCell.SelectedValue="{Binding SelectedTheme}">
+                <sv:RadioCell Title="Light" Value="Light" />
+                <sv:RadioCell Title="Dark" Value="Dark" />
+            </sv:Section>
+
+            <sv:Section Title="Language" sv:RadioCell.SelectedValue="{Binding SelectedLanguage}">
+                <sv:RadioCell Title="Polish" Value="Polish" />
+                <sv:RadioCell Title="English" Value="English" />
+                <sv:RadioCell Title="Russian" Value="Russian" />
+            </sv:Section>
+        </sv:SettingsView>
+
+        <Button
+                        Margin="30"
+                        Padding="0,15"
+                        BackgroundColor="{DynamicResource PrimaryColor}"
+                        CornerRadius="28"
+                        FontFamily="SourceSansRegular"
+                        FontSize="18" Command="{Binding LogoutCommand}"
+                        Text="Logout"
+                        TextColor="{DynamicResource OnPrimaryColor}" />
     </VerticalStackLayout>
+
 </ContentPage>

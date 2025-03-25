@@ -3,20 +3,28 @@ using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls.Platform.Compatibility;
+using ProjectManagerMobile.Models.DTO;
+using ProjectManagerMobile.Services;
+using ProjectManagerMobile.Services.Interfaces;
+using ProjectManagerMobile.Views;
 using ProjectManagerMobile.Views.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ProjectManagerMobile.ViewModels.Auth
 {
     public partial class LoginViewModel : BaseViewModel
     {
-        public LoginViewModel()
+        private IAuthApi _authApi;
+        private TokenStorageService _tokenStorageService;
+        public LoginViewModel(IAuthApi authApi, TokenStorageService tokenStorageService)
         {
-            
+            _authApi = authApi;
+            _tokenStorageService = tokenStorageService;
         }
 
         [ObservableProperty]
@@ -36,8 +44,26 @@ namespace ProjectManagerMobile.ViewModels.Auth
 
             try
             {
-                // todo
+                IsBusy = true;
 
+                var response = await _authApi.LoginUser(new UserLoginRequest
+                {
+                    Identifier = UsernameEmail,
+                    Password = Password
+                });
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var tokenData = response.Content;
+                    await _tokenStorageService.SaveUserSession(tokenData);
+
+                    await Shell.Current.GoToAsync($"//{nameof(ProjectsListPage)}");
+                }
+                else
+                {
+                    var message = JsonSerializer.Deserialize<ErrorResponse>(response.Error.Content).Message;
+                    await Toast.Make(message).Show();
+                }
 
             }
             catch (Exception ex)
@@ -46,7 +72,7 @@ namespace ProjectManagerMobile.ViewModels.Auth
             }
             finally
             {
-
+                IsBusy = false;
             }
         }
 
@@ -73,6 +99,50 @@ namespace ProjectManagerMobile.ViewModels.Auth
         {
             UsernameEmail = string.Empty;
             Password = string.Empty;
+        }
+
+        public async Task ProcessCheckUserSession()
+        {
+            try
+            {
+                IsBusy = true;
+
+                if (await _tokenStorageService.IsUserLoggedIn())
+                {
+                    if (await _tokenStorageService.ShouldRefreshTokens())
+                    {
+                        var userTokenReq = new UserTokensRequest
+                        {
+                            AccessToken = await _tokenStorageService.GetAccessTokenAsync(),
+                            RefreshToken = await _tokenStorageService.GetRefreshTokenAsync()
+                        };
+
+                        var response = await _authApi.RefreshToken(userTokenReq);
+                        if (response.IsSuccessful)
+                        {
+                            await Toast.Make("Token refreshed successfully.").Show();
+                        }
+                        else
+                        {
+                            var message = JsonSerializer.Deserialize<ErrorResponse>(response.Error.Content).Message;
+                            await Toast.Make(message).Show();
+                        }
+                    }
+                    else
+                    {
+                        await Shell.Current.GoToAsync($"//{nameof(ProjectsListPage)}");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await Toast.Make(ex.Message).Show();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

@@ -1,12 +1,109 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProjectManagerMobile.Views.ProfilePage"
-             Title="ProfilePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="ProjectManagerMobile.Views.ProfilePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Title="Profile">
+
+    <ContentPage.Resources>
+        <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    </ContentPage.Resources>
+
+    <Grid>
+        <VerticalStackLayout Padding="20" IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
+            <Image
+                HeightRequest="200"
+                Source="dotnet_bot.png"
+                WidthRequest="200" />
+
+            <Label
+                FontFamily="OpenSansBold"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="Name"
+                TextColor="{DynamicResource PrimaryColor}" />
+
+
+            <Label
+                Margin="5"
+                FontFamily="OpenSansBold"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="{Binding Name}"
+                TextColor="{DynamicResource TertiaryTextColor}" />
+
+            <BoxView
+                Margin="15"
+                HeightRequest="1"
+                Color="{DynamicResource SecondaryColor}" />
+
+            <Label
+                FontFamily="OpenSansBold"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="Username"
+                TextColor="{DynamicResource PrimaryColor}" />
+
+
+            <Label
+                Margin="5"
+                FontFamily="OpenSansBold"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="{Binding Username}"
+                TextColor="{DynamicResource TertiaryTextColor}" />
+
+            <BoxView
+                Margin="15"
+                HeightRequest="1"
+                Color="{DynamicResource SecondaryColor}" />
+
+            <Label
+                FontFamily="OpenSansBold"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="E-mail"
+                TextColor="{DynamicResource PrimaryColor}" />
+
+
+            <Label
+                Margin="5"
+                FontFamily="OpenSansBold"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="{Binding Email}"
+                TextColor="{DynamicResource TertiaryTextColor}" />
+
+            <BoxView
+                Margin="15"
+                HeightRequest="1"
+                Color="{DynamicResource SecondaryColor}" />
+
+            <Label
+                FontFamily="OpenSansBold"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="About"
+                TextColor="{DynamicResource PrimaryColor}" />
+
+
+            <Label
+                Margin="5"
+                FontFamily="OpenSansBold"
+                FontSize="20"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="{Binding About}"
+                TextColor="{DynamicResource TertiaryTextColor}" />
+        </VerticalStackLayout>
+
+        <ActivityIndicator
+            IsEnabled="{Binding IsBusy}" WidthRequest="40" 
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            Color="{DynamicResource PrimaryColor}" />
+    </Grid>
+
+
 </ContentPage>

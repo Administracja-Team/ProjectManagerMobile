@@ -19,8 +19,8 @@ public partial class AuthPage : ContentPage
 
     private async void GoToRegister_Clicked(object sender, EventArgs e)
     {
-        var t1 = MainBorder.TranslateTo(0, 0, 250, Easing.CubicIn);
-        var t2 = ProjectManagerLabel.TranslateTo(0, 0, 250, Easing.CubicIn);
+        var t1 = MainBorder.TranslateTo(0, 0, 250, Easing.Linear);
+        var t2 = ProjectManagerLabel.TranslateTo(0, 0, 250, Easing.Linear);
         await Task.WhenAll(t1, t2);
 
         _loginVM.ClearState();
@@ -64,8 +64,15 @@ public partial class AuthPage : ContentPage
         ProfileImageButton.IsVisible = false;
         BackButton.IsVisible = false;
 
-        var t7 = MainBorder.TranslateTo(0, 100, 250, Easing.CubicIn);
-        var t8 = ProjectManagerLabel.TranslateTo(0, 50, 250, Easing.CubicIn);
+        var t7 = MainBorder.TranslateTo(0, 100, 250, Easing.Linear);
+        var t8 = ProjectManagerLabel.TranslateTo(0, 50, 250, Easing.Linear);
         await Task.WhenAll(t7, t8);
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        await _loginVM.ProcessCheckUserSession();
     }
 }

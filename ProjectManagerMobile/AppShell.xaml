@@ -3,26 +3,41 @@
     x:Class="ProjectManagerMobile.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:ProjectManagerMobile.Views"
-    xmlns:auth="clr-namespace:ProjectManagerMobile.Views.Auth"
-    Shell.BackgroundColor="#1D5C57"
-    Shell.FlyoutBehavior="Flyout"
+    xmlns:views="clr-namespace:ProjectManagerMobile.Views" xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:auth="clr-namespace:ProjectManagerMobile.Views.Auth" xmlns:utils="clr-namespace:ProjectManagerMobile.Utilities"
+    FlyoutBackgroundColor="{DynamicResource SecondaryBackgroundColor}" Shell.BackgroundColor="{DynamicResource PrimaryColor}" Shell.TitleColor="{DynamicResource OnPrimaryColor}" Shell.ForegroundColor="{DynamicResource OnPrimaryColor}"
+    Shell.FlyoutBehavior="Flyout" Shell.ItemTemplate="{StaticResource ShellItemTemplate}"
     Title="ProjectManagerMobile">
+
+    <Shell.FlyoutHeader>
+        <StaticResource Key="ShellFlyoutHeader" />
+    </Shell.FlyoutHeader>
 
     <ShellContent
         ContentTemplate="{DataTemplate auth:AuthPage}"
-        Route="AuthPage" />
+        Shell.FlyoutBehavior="Disabled"
+        Route="AuthPage"
+        Shell.FlyoutItemIsVisible="False" />
 
-    <ShellContent
-        ContentTemplate="{DataTemplate views:ProjectsListPage}"
-        Route="ProjectsListPage" />
+    <MenuItem>
+        <Shell.MenuItemTemplate>
+            <DataTemplate>
+                <Label HeightRequest="1" Margin="10" BackgroundColor="{DynamicResource SecondaryColor}" />
+            </DataTemplate>
+        </Shell.MenuItemTemplate>
+    </MenuItem>
 
-    <ShellContent
-        ContentTemplate="{DataTemplate views:ProfilePage}"
-        Route="ProfilePage" />
+    <utils:FlyoutItemIconFont Title="Projects" IconGlyph="TaskList" >
+        <ShellContent ContentTemplate="{DataTemplate views:ProjectsListPage}" Route="ProjectsListPage" />
+    </utils:FlyoutItemIconFont>
 
-    <ShellContent
-        ContentTemplate="{DataTemplate views:SettingsPage}"
-        Route="SettingsPage" />
+    <utils:FlyoutItemIconFont Title="Profile" IconGlyph="Person">
+        <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" Route="ProfilePage" />
+    </utils:FlyoutItemIconFont>
+
+
+    <utils:FlyoutItemIconFont Title="Settings" IconGlyph="Settings" >
+        <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" Route="SettingsPage" />
+    </utils:FlyoutItemIconFont>
 
 </Shell>

@@ -8,7 +8,17 @@
     BackgroundColor="{DynamicResource PrimaryColor}"
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="False">
+
     <Grid x:Name="MainGrid" RowDefinitions="*, 4*">
+        <ActivityIndicator
+            Grid.Row="0"
+            Margin="20"
+            IsEnabled="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Start"
+            WidthRequest="40"
+            Color="{DynamicResource OnPrimaryColor}" />
 
         <Label
             x:Name="ProjectManagerLabel"
@@ -77,20 +87,22 @@
 
                     <controls:FilledEntryControl
                         FocusColor="{DynamicResource PrimaryTextColor}"
-                        FontSize="18" Text="{Binding UsernameEmail}"
+                        FontSize="18"
                         Placeholder="Username or e-mail"
                         PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
                         PlaceholderFontSize="12"
+                        Text="{Binding UsernameEmail}"
                         TextColor="{DynamicResource SecondaryTextColor}"
                         UnfocusColor="{DynamicResource SecondaryTextColor}" />
 
                     <controls:FilledEntryControl
                         FocusColor="{DynamicResource PrimaryTextColor}"
-                        FontSize="18" Text="{Binding Password}"
+                        FontSize="18"
                         IsPassword="True"
                         Placeholder="Password"
                         PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
                         PlaceholderFontSize="12"
+                        Text="{Binding Password}"
                         TextColor="{DynamicResource SecondaryTextColor}"
                         UnfocusColor="{DynamicResource SecondaryTextColor}" />
 
@@ -107,10 +119,11 @@
                         Margin="0,30,0,0"
                         Padding="0,15"
                         BackgroundColor="{DynamicResource PrimaryColor}"
+                        Command="{Binding LoginCommand}"
                         CornerRadius="28"
                         FontFamily="SourceSansRegular"
                         FontSize="18"
-                        Text="Sign in" Command="{Binding LoginCommand}"
+                        Text="Sign in"
                         TextColor="{DynamicResource OnPrimaryColor}" />
                 </VerticalStackLayout>
 
@@ -128,57 +141,64 @@
                     Spacing="10">
                     <controls:FilledEntryControl
                         FocusColor="{DynamicResource PrimaryTextColor}"
-                        FontSize="18" Text="{Binding Username}"
+                        FontSize="18"
                         Placeholder="Username"
                         PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
                         PlaceholderFontSize="12"
+                        Text="{Binding Username}"
                         TextColor="{DynamicResource SecondaryTextColor}"
                         UnfocusColor="{DynamicResource SecondaryTextColor}" />
 
                     <controls:FilledEntryControl
                         FocusColor="{DynamicResource PrimaryTextColor}"
                         FontSize="18"
-                        Placeholder="First Name" Text="{Binding FirstName}"
+                        Placeholder="First Name"
                         PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
                         PlaceholderFontSize="12"
+                        Text="{Binding FirstName}"
                         TextColor="{DynamicResource SecondaryTextColor}"
                         UnfocusColor="{DynamicResource SecondaryTextColor}" />
 
                     <controls:FilledEntryControl
                         FocusColor="{DynamicResource PrimaryTextColor}"
                         FontSize="18"
-                        Placeholder="Last Name" Text="{Binding LastName}"
+                        Placeholder="Last Name"
                         PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
                         PlaceholderFontSize="12"
+                        Text="{Binding LastName}"
                         TextColor="{DynamicResource SecondaryTextColor}"
                         UnfocusColor="{DynamicResource SecondaryTextColor}" />
 
                     <controls:FilledEntryControl
                         FocusColor="{DynamicResource PrimaryTextColor}"
-                        FontSize="18" Text="{Binding Email}"
-                        Placeholder="E-mail" Keyboard="Email"
+                        FontSize="18"
+                        Keyboard="Email"
+                        Placeholder="E-mail"
                         PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
                         PlaceholderFontSize="12"
+                        Text="{Binding Email}"
                         TextColor="{DynamicResource SecondaryTextColor}"
                         UnfocusColor="{DynamicResource SecondaryTextColor}" />
 
                     <controls:FilledEntryControl
                         FocusColor="{DynamicResource PrimaryTextColor}"
-                        FontSize="18" Text="{Binding Password}"
+                        FontSize="18"
                         IsPassword="True"
                         Placeholder="Password"
                         PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
                         PlaceholderFontSize="12"
+                        Text="{Binding Password}"
                         TextColor="{DynamicResource SecondaryTextColor}"
                         UnfocusColor="{DynamicResource SecondaryTextColor}" />
 
                     <controls:FilledEntryControl
                         FocusColor="{DynamicResource PrimaryTextColor}"
                         FontSize="18"
-                        IsPassword="True" Text="{Binding PasswordRepeat}"
+                        IsPassword="True"
                         Placeholder="Password repeat"
                         PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
                         PlaceholderFontSize="12"
+                        Text="{Binding PasswordRepeat}"
                         TextColor="{DynamicResource SecondaryTextColor}"
                         UnfocusColor="{DynamicResource SecondaryTextColor}" />
 
@@ -186,9 +206,10 @@
                         Margin="0,30,0,0"
                         Padding="0,15"
                         BackgroundColor="{DynamicResource PrimaryColor}"
+                        Command="{Binding CreateAccountCommand}"
                         CornerRadius="28"
                         FontFamily="SourceSansRegular"
-                        FontSize="18" Command="{Binding CreateAccountCommand}"
+                        FontSize="18"
                         Text="Create an account"
                         TextColor="{DynamicResource OnPrimaryColor}" />
                 </VerticalStackLayout>
@@ -199,6 +220,8 @@
         <Border
             x:Name="ProfileImageButton"
             Grid.Row="1"
+            Padding="20"
+            BackgroundColor="{DynamicResource SecondaryColor}"
             HeightRequest="100"
             IsVisible="False"
             Opacity="0"
@@ -207,14 +230,11 @@
             TranslationY="-50"
             VerticalOptions="Start"
             WidthRequest="100">
-            <ImageButton Padding="20" BackgroundColor="{DynamicResource SecondaryColor}">
-                <ImageButton.Source>
-                    <ic:FluentImageSource
-                        Icon="Add"
-                        IconVariant="Filled"
-                        Color="{DynamicResource OnPrimaryColor}" />
-                </ImageButton.Source>
-            </ImageButton>
+            <ic:FluentIcon
+                FontSize="44"
+                ForegroundColor="{DynamicResource OnPrimaryColor}"
+                Icon="Person"
+                IconVariant="Filled" />
         </Border>
 
     </Grid>

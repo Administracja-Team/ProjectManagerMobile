@@ -48,6 +48,10 @@ namespace ProjectManagerMobile.Utilities
                 case Language.English:
                     Application.Current.Resources.MergedDictionaries.Add(new EnglishLanguage());
                     break;
+
+                case Language.Russian:
+                    Application.Current.Resources.MergedDictionaries.Add(new RussianLanguage());
+                    break;
             }
         }
 
@@ -64,7 +68,18 @@ namespace ProjectManagerMobile.Utilities
                 StatusBar.SetColor(color);
             }
         }
-    
+
+        public static string GetCurrentLanguageCode()
+        {
+            return CurrentLanguage switch
+            {
+                Language.Polish => "pl",
+                Language.English => "en",
+                Language.Russian => "ru",
+                _ => "en",
+            };
+        }
+
 
         private static void ClearResources()
         {
@@ -76,7 +91,8 @@ namespace ProjectManagerMobile.Utilities
         public enum Language
         {
             Polish,
-            English
+            English,
+            Russian
         }
 
         public enum Theme

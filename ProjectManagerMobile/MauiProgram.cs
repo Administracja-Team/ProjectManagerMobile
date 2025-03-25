@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui;
+﻿using AiForms.Settings;
+using CommunityToolkit.Maui;
 using DevExpress.Maui;
 using FluentIcons.Maui;
 using Microsoft.Extensions.Logging;
@@ -20,6 +21,10 @@ public static class MauiProgram
 			.RegisterServices()
 			.RegisterViews()
 			.RegisterViewModels()
+			.ConfigureMauiHandlers(handlers =>
+			{
+                handlers.AddSettingsViewHandler();
+            })
             .ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
