@@ -78,6 +78,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Utilities\Converters\" />
+	  <Folder Include="ViewModels\Popups\" />
 	</ItemGroup>
 
 	<ItemGroup>

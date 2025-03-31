@@ -33,6 +33,9 @@ namespace ProjectManagerMobile.ViewModels.Auth
         [ObservableProperty]
         public partial string Password { get; set; }
 
+        [ObservableProperty]
+        public partial bool IsUserLoggedChecking { get; set; }
+
         [RelayCommand]
         private async Task Login()
         {
@@ -105,6 +108,7 @@ namespace ProjectManagerMobile.ViewModels.Auth
         {
             try
             {
+                IsUserLoggedChecking = true;
                 IsBusy = true;
 
                 if (await _tokenStorageService.IsUserLoggedIn())
@@ -142,6 +146,7 @@ namespace ProjectManagerMobile.ViewModels.Auth
             finally
             {
                 IsBusy = false;
+                IsUserLoggedChecking = false;
             }
         }
     }

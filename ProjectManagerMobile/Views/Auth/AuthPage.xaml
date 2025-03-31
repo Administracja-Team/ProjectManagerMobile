@@ -3,11 +3,15 @@
     x:Class="ProjectManagerMobile.Views.Auth.AuthPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:ProjectManagerMobile.Controls"
+    xmlns:controls="clr-namespace:ProjectManagerMobile.Controls" xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     BackgroundColor="{DynamicResource PrimaryColor}"
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    </ContentPage.Resources>
 
     <Grid x:Name="MainGrid" RowDefinitions="*, 4*">
         <ActivityIndicator
@@ -67,7 +71,7 @@
 
         <Border
             x:Name="MainBorder"
-            Grid.Row="1"
+            Grid.Row="1" IsVisible="{Binding IsUserLoggedChecking, Converter={StaticResource InvertedBoolConverter}}"
             BackgroundColor="{DynamicResource SecondaryBackgroundColor}"
             StrokeShape="RoundRectangle 36,36,0,0"
             TranslationY="100">
