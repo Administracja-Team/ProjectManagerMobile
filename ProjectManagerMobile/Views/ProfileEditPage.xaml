@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProjectManagerMobile.Views.ProfileEditPage" xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Profile Info">
+
+    <ContentPage.Resources>
+        <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding SaveUserInfoCommand}">
+            <ToolbarItem.IconImageSource>
+                <ic:FluentImageSource Icon="Checkmark" IconVariant="Filled" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <Grid Padding="20" >
+        <VerticalStackLayout  IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
+            <HorizontalStackLayout Spacing="10" VerticalOptions="Center" Margin="0,20">
+                <Border
+                    HeightRequest="80" VerticalOptions="Center"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 100"
+                    WidthRequest="80">
+                    <Image Source="{Binding Avatar}" />
+                </Border>
+
+                <Button
+                    BackgroundColor="Transparent"
+                    Command="{Binding SelectAvatarCommand}"
+                    FontSize="18"
+                    Text="Change photo"
+                    TextColor="{DynamicResource PrimaryTextColor}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Label
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                HorizontalOptions="Start"
+                Text="First Name"
+                TextColor="{DynamicResource PrimaryColor}" />
+            <Entry
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                Text="{Binding FirstName}"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+
+            <Label Margin="0,20,0,0"
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                HorizontalOptions="Start"
+                Text="Last Name"
+                TextColor="{DynamicResource PrimaryColor}" />
+            <Entry
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                Text="{Binding LastName}"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+
+            <Label Margin="0,20,0,0"
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                HorizontalOptions="Start"
+                Text="Username"
+                TextColor="{DynamicResource PrimaryColor}" />
+            <Entry
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                Text="{Binding Username}"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+
+            <Label Margin="0,20,0,0"
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                HorizontalOptions="Start"
+                Text="Your bio"
+                TextColor="{DynamicResource PrimaryColor}" />
+            <Editor
+                FontFamily="SourceSansRegular"
+                FontSize="20" AutoSize="TextChanges"
+                Text="{Binding About}"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+        </VerticalStackLayout>
+
+        <ActivityIndicator
+            IsEnabled="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            WidthRequest="40"
+            Color="{DynamicResource PrimaryColor}" />
+    </Grid>
+
+</ContentPage>

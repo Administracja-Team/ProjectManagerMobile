@@ -82,8 +82,8 @@ namespace ProjectManagerMobile.ViewModels.Auth
             if (string.IsNullOrWhiteSpace(UsernameEmail))
                 return await ShowToastAsync("Enter your username or email.");
 
-            if (string.IsNullOrWhiteSpace(Password) || Password.Length < 6)
-                return await ShowToastAsync("Password must be at least 6 characters.");
+            if (string.IsNullOrWhiteSpace(Password) || Password.Length < 5)
+                return await ShowToastAsync("Password must be at least 5 characters.");
 
             return true;
         }

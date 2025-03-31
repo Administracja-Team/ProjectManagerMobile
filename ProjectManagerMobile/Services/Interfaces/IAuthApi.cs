@@ -23,6 +23,6 @@ namespace ProjectManagerMobile.Services.Interfaces
         Task<ApiResponse<BearerTokenDto>> RefreshToken([Body] UserTokensRequest request);
 
         [Delete("/authorization/logout")]
-        Task<ApiResponse<object>> LogoutUser([Body] UserTokensRequest request);
+        Task<ApiResponse<string>> LogoutUser([Body] UserTokensRequest request);
     }
 }

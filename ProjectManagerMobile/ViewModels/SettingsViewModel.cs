@@ -17,13 +17,8 @@ namespace ProjectManagerMobile.ViewModels
 {
     public partial class SettingsViewModel : BaseViewModel
     {
-        private IAuthApi _authApi;
-        private TokenStorageService _tokenStorageService;
-
-        public SettingsViewModel(IAuthApi authApi, TokenStorageService tokenStorageService)
+        public SettingsViewModel()
         {
-            _authApi = authApi;
-            _tokenStorageService = tokenStorageService;
             SelectedTheme = AppSettings.CurrentTheme.ToString();
             SelectedLanguage = AppSettings.CurrentLanguage.ToString();
         }
@@ -47,38 +42,6 @@ namespace ProjectManagerMobile.ViewModels
             if (Enum.TryParse<AppSettings.Language>(value, out var language))
             {
                 AppSettings.SetLanguage(language);
-            }
-        }
-
-        [RelayCommand]
-        private async Task Logout()
-        {
-            try
-            {
-                var response = await _authApi.LogoutUser(new Models.DTO.UserTokensRequest
-                {
-                    AccessToken = await _tokenStorageService.GetAccessTokenAsync(),
-                    RefreshToken = await _tokenStorageService.GetRefreshTokenAsync()
-                });
-
-                if (response.IsSuccessStatusCode)
-                {
-                    _tokenStorageService.RemoveUserSessionAsync();
-                    await Shell.Current.GoToAsync($"//{nameof(AuthPage)}");
-                }
-                else
-                {
-                    var message = JsonSerializer.Deserialize<ErrorResponse>(response.Error.Content).Message;
-                    await Toast.Make(message).Show();
-                }
-            } 
-            catch(Exception ex)
-            {
-                await Toast.Make(ex.Message).Show();
-            }
-            finally
-            {
-
             }
         }
     }

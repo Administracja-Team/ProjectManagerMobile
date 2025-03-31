@@ -63,12 +63,12 @@ namespace ProjectManagerMobile.Services
 
         public async Task<string?> GetBearerTokenAsync()
         {
-            return await GetAccessTokenAsync();
+            return "Bearer " + await SecureStorage.Default.GetAsync(AccessTokenKey);
         }
 
         public async Task<string?> GetAccessTokenAsync()
         {
-            return "Bearer " + await SecureStorage.Default.GetAsync(AccessTokenKey);
+            return await SecureStorage.Default.GetAsync(AccessTokenKey);
         }
 
         public async Task<string?> GetRefreshTokenAsync()

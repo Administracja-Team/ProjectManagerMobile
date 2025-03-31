@@ -37,16 +37,6 @@
                 <sv:RadioCell Title="Russian" Value="Russian" />
             </sv:Section>
         </sv:SettingsView>
-
-        <Button
-                        Margin="30"
-                        Padding="0,15"
-                        BackgroundColor="{DynamicResource PrimaryColor}"
-                        CornerRadius="28"
-                        FontFamily="SourceSansRegular"
-                        FontSize="18" Command="{Binding LogoutCommand}"
-                        Text="Logout"
-                        TextColor="{DynamicResource OnPrimaryColor}" />
     </VerticalStackLayout>
 
 </ContentPage>

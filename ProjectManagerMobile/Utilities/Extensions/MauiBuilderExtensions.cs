@@ -17,6 +17,7 @@ namespace ProjectManagerMobile.Utilities.Extensions
 
             builder.Services.AddTransient<ProjectsListPage>();
             builder.Services.AddTransient<ProfilePage>();
+            builder.Services.AddTransient<ProfileEditPage>();
             builder.Services.AddTransient<SettingsPage>();
 
 
@@ -29,6 +30,7 @@ namespace ProjectManagerMobile.Utilities.Extensions
 
             builder.Services.AddTransient<ProjectsListViewModel>();
             builder.Services.AddTransient<ProfileViewModel>();
+            builder.Services.AddTransient<ProfileEditViewModel>();
             builder.Services.AddTransient<SettingsViewModel>();
 
             return builder;

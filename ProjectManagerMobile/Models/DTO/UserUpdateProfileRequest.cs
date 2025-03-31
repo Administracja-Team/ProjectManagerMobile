@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ProjectManagerMobile.Models.DTO
@@ -10,7 +11,11 @@ namespace ProjectManagerMobile.Models.DTO
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string LanguageCode { get; set; }
+
+        //public string Username { get; set; }
+
+        //[JsonPropertyName("language_code")]
+        //public string LanguageCode { get; set; }
     }
 
 }

@@ -1,4 +1,5 @@
-﻿using ProjectManagerMobile.Views.Auth;
+﻿using ProjectManagerMobile.Views;
+using ProjectManagerMobile.Views.Auth;
 
 namespace ProjectManagerMobile
 {
@@ -12,7 +13,7 @@ namespace ProjectManagerMobile
 
         private void RegisterRoutes()
         {
-            //Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
+            Routing.RegisterRoute(nameof(ProfileEditPage), typeof(ProfileEditPage));
         }
     }
 }
