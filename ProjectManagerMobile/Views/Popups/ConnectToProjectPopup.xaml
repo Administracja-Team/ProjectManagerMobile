@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="ProjectManagerMobile.Views.Popups.ConnectToProjectPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:controls="clr-namespace:ProjectManagerMobile.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Color="Transparent">
+
+    <Border Padding="20" Background="{DynamicResource SecondaryBackgroundColor}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="30" />
+        </Border.StrokeShape>
+
+        <VerticalStackLayout Spacing="10" WidthRequest="350">
+
+            <Label
+                FontFamily="SourceSansRegular"
+                FontSize="26"
+                HorizontalOptions="Center"
+                Text="Connect to project"
+                TextColor="{DynamicResource PrimaryTextColor}" />
+
+            <controls:FilledEntryControl
+                        FocusColor="{DynamicResource PrimaryTextColor}"
+                        FontSize="18" 
+                        Placeholder="Put id of a project"
+                        PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                        PlaceholderFontSize="12"
+                        Text="{Binding ProjectId}" HeightRequest="60"
+                        TextColor="{DynamicResource SecondaryTextColor}"
+                        UnfocusColor="{DynamicResource SecondaryTextColor}" />
+
+            <Button
+                BackgroundColor="{DynamicResource PrimaryColor}"
+                Command="{Binding ConnectToProjectCommand}"
+                CornerRadius="20"
+                FontSize="22"
+                HeightRequest="60" Clicked="Button_Clicked"
+                Text="Connect" FontFamily="SourceSansRegular"
+                TextColor="{DynamicResource OnPrimaryColor}" />
+
+        </VerticalStackLayout>
+    </Border>
+
+</toolkit:Popup>

@@ -78,7 +78,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Utilities\Converters\" />
-	  <Folder Include="ViewModels\Popups\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -93,6 +92,12 @@
 	  </Compile>
 	  <Compile Update="Views\Auth\AuthPage.xaml.cs">
 	    <DependentUpon>AuthPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Popups\ConnectToProjectPopup.xaml.cs">
+	    <DependentUpon>ConnectToProjectPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Popups\ProjectActionsPopup.xaml.cs">
+	    <DependentUpon>ProjectActionsPopup.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -122,6 +127,15 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Auth\AuthPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\CreateNewProjectPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\ConnectToProjectPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\ProjectActionsPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Popups\ProfileSettingsPopup.xaml">

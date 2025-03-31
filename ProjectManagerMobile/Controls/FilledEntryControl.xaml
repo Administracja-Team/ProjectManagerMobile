@@ -10,7 +10,7 @@
             Grid.Row="0"
             Padding="20,-4"
             BackgroundColor="{Binding Source={x:Reference this}, Path=PlaceholderBackgroundColor}"
-            StrokeShape="RoundRectangle 28"
+            StrokeShape="RoundRectangle 20"
             StrokeThickness="5"
             Stroke="Transparent">
 

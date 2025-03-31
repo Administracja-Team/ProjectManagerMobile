@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="ProjectManagerMobile.Views.Popups.ProjectActionsPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Color="Transparent">
+
+    <Border Padding="20" Background="{DynamicResource SecondaryBackgroundColor}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="30" />
+        </Border.StrokeShape>
+
+        <VerticalStackLayout Spacing="10" WidthRequest="350">
+
+            <Label
+                FontFamily="SourceSansRegular"
+                FontSize="26"
+                HorizontalOptions="Center"
+                Text="Select action"
+                TextColor="{DynamicResource PrimaryTextColor}" />
+
+            <Button
+                BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                Command="{Binding GoToConnectToProjectCommand}"
+                CornerRadius="20"
+                FontSize="22" FontFamily="SourceSansRegular"
+                HeightRequest="60" Clicked="Button_Clicked"
+                Text="Connect to project"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+            <Button
+                BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                Command="{Binding GoToCreateNewProjectCommand}"
+                CornerRadius="20"
+                FontSize="22"
+                HeightRequest="60" Clicked="Button_Clicked"
+                Text="Create new project" FontFamily="SourceSansRegular"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+
+        </VerticalStackLayout>
+    </Border>
+
+</toolkit:Popup>

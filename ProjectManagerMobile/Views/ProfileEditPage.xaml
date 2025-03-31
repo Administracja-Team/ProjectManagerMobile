@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="ProjectManagerMobile.Views.ProfileEditPage" xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="ProjectManagerMobile.Views.ProfileEditPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="Profile Info">
 
     <ContentPage.Resources>
@@ -17,13 +19,17 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <Grid Padding="20" >
-        <VerticalStackLayout  IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
-            <HorizontalStackLayout Spacing="10" VerticalOptions="Center" Margin="0,20">
+    <Grid Padding="20">
+        <VerticalStackLayout IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
+            <HorizontalStackLayout
+                Margin="0,20"
+                Spacing="10"
+                VerticalOptions="Center">
                 <Border
-                    HeightRequest="80" VerticalOptions="Center"
+                    HeightRequest="80"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 100"
+                    VerticalOptions="Center"
                     WidthRequest="80">
                     <Image Source="{Binding Avatar}" />
                 </Border>
@@ -49,7 +55,8 @@
                 Text="{Binding FirstName}"
                 TextColor="{DynamicResource SecondaryTextColor}" />
 
-            <Label Margin="0,20,0,0"
+            <Label
+                Margin="0,20,0,0"
                 FontFamily="SourceSansRegular"
                 FontSize="20"
                 HorizontalOptions="Start"
@@ -61,7 +68,8 @@
                 Text="{Binding LastName}"
                 TextColor="{DynamicResource SecondaryTextColor}" />
 
-            <Label Margin="0,20,0,0"
+            <Label
+                Margin="0,20,0,0"
                 FontFamily="SourceSansRegular"
                 FontSize="20"
                 HorizontalOptions="Start"
@@ -73,15 +81,17 @@
                 Text="{Binding Username}"
                 TextColor="{DynamicResource SecondaryTextColor}" />
 
-            <Label Margin="0,20,0,0"
+            <Label
+                Margin="0,20,0,0"
                 FontFamily="SourceSansRegular"
                 FontSize="20"
                 HorizontalOptions="Start"
                 Text="Your bio"
                 TextColor="{DynamicResource PrimaryColor}" />
             <Editor
+                AutoSize="TextChanges"
                 FontFamily="SourceSansRegular"
-                FontSize="20" AutoSize="TextChanges"
+                FontSize="20"
                 Text="{Binding About}"
                 TextColor="{DynamicResource SecondaryTextColor}" />
         </VerticalStackLayout>

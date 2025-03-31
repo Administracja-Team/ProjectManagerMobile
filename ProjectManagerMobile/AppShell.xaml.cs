@@ -14,6 +14,7 @@ namespace ProjectManagerMobile
         private void RegisterRoutes()
         {
             Routing.RegisterRoute(nameof(ProfileEditPage), typeof(ProfileEditPage));
+            Routing.RegisterRoute(nameof(CreateNewProjectPage), typeof(CreateNewProjectPage));
         }
     }
 }

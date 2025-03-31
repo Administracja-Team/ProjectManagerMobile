@@ -1,12 +1,82 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProjectManagerMobile.Views.ProjectsListPage"
-             Title="Projects">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="ProjectManagerMobile.Views.ProjectsListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    Title="Projects">
+
+    <Grid Padding="20">
+        <CollectionView ItemsSource="{Binding ProjectsList}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        Margin="0,5"
+                        Padding="20"
+                        BackgroundColor="{DynamicResource SecondaryColor}"
+                        StrokeShape="RoundRectangle 20">
+                        <Grid
+                            ColumnDefinitions="Auto, *"
+                            ColumnSpacing="15"
+                            RowDefinitions="Auto, Auto, Auto"
+                            RowSpacing="5">
+                            <Label
+                                Grid.ColumnSpan="2"
+                                FontFamily="SourceSansBold"
+                                FontSize="20"
+                                Text="{Binding NameWithOwner}"
+                                TextColor="{DynamicResource OnPrimaryColor}" />
+
+                            <Border
+                                Grid.Row="1"
+                                Grid.RowSpan="2"
+                                BackgroundColor="Transparent"
+                                HeightRequest="60"
+                                Stroke="{DynamicResource OnPrimaryColor}"
+                                StrokeShape="RoundRectangle 100"
+                                StrokeThickness="1"
+                                WidthRequest="60" />
+
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                FontFamily="SourceSansRegular"
+                                FontSize="18"
+                                Text="{Binding CurrentSprintName}"
+                                TextColor="{DynamicResource OnPrimaryColor}" />
+
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                FontFamily="SourceSansRegular"
+                                FontSize="18"
+                                Text="{Binding CurrentSprintDeadLine}"
+                                TextColor="{DynamicResource OnPrimaryColor}" />
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <ImageButton
+            x:Name="FloatingButton"
+            Grid.Row="1"
+            Aspect="AspectFill"
+            BackgroundColor="{DynamicResource PrimaryColor}"
+            Command="{Binding GoToProjectActionsCommand}"
+            CornerRadius="50"
+            HeightRequest="65"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            WidthRequest="65">
+            <ImageButton.Source>
+                <ic:FluentImageSource
+                    Icon="Add"
+                    IconVariant="Filled"
+                    Color="{DynamicResource OnPrimaryColor}" />
+            </ImageButton.Source>
+        </ImageButton>
+    </Grid>
+
 </ContentPage>

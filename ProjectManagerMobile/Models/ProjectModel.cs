@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProjectManagerMobile.Models
+{
+    public class ProjectModel
+    {
+        public string Name { get; set; }
+
+        public string OwnerName { get; set; }
+
+        public string NameWithOwner => $"{Name} | {OwnerName}";
+
+        public string CurrentSprintName { get; set; }
+
+        public DateTime CurrentSprintDeadLine { get; set; }
+
+        public ProjectModel()
+        {
+            
+        }
+    }
+}
