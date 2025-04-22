@@ -16,6 +16,7 @@ namespace ProjectManagerMobile.ViewModels
 {
     public partial class ProjectViewModel : BaseViewModel
     {
+        private long _projectId;
         private IProjectApi _projectApi;
         private TokenStorageService _tokenStorageService;
         public ProjectViewModel(IProjectApi projectApi, TokenStorageService tokenStorageService)
@@ -31,9 +32,15 @@ namespace ProjectManagerMobile.ViewModels
         public partial string TermOfWorks { get; set; }
 
         [ObservableProperty]
+        public partial string ProjectName { get; set; }
+
+        [ObservableProperty]
         public partial string ProjectDescription { get; set; }
 
-        public ObservableCollection<UserDto> Members { get; set; } = new ObservableCollection<UserDto>();
+        [ObservableProperty]
+        public partial bool IsBottomSheetOpened { get; set; } = false;
+
+        public ObservableCollection<OtherProjectMemberDto> Members { get; set; } = new ObservableCollection<OtherProjectMemberDto>();
 
         public ObservableCollection<string> Sprints { get; set; } = new ObservableCollection<string>() 
         {
@@ -55,7 +62,7 @@ namespace ProjectManagerMobile.ViewModels
         [RelayCommand]
         private async Task ShowParticipants()
         {
-
+            IsBottomSheetOpened = true;
         }
 
         [RelayCommand]
@@ -88,6 +95,20 @@ namespace ProjectManagerMobile.ViewModels
             var response = await _projectApi.GetProjectDetails(token, projectId);
             if (response.IsSuccessful)
             {
+                var details = response.Content;
+
+                _projectId = details.Project.Id;
+                ProjectName = details.Project.Name;
+                ProjectDescription = details.Project.Description ?? "No info";
+
+                foreach (var p in details.Others)
+                {
+                    Members.Add(p);
+                    if (p.SystemRole == "OWNER")
+                    {
+                        Owner = $"{p.User.Name} {p.User.Surname}";
+                    }
+                }
 
             }
             else

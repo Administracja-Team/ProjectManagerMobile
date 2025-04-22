@@ -15,7 +15,7 @@ namespace ProjectManagerMobile.Services.Interfaces
         Task<ApiResponse<List<ProjectMemberDto>>> GetAllUserProjects(
             [Header("Authorization")] string accessToken);
 
-        [Get("/project{project_id}")]
+        [Get("/project/{project_id}")]
         Task<ApiResponse<ProjectDetailsDto>> GetProjectDetails(
             [Header("Authorization")] string accessToken,
             [AliasAs("project_id")] long projectId

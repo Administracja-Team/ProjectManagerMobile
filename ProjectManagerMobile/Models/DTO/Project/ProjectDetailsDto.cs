@@ -10,6 +10,6 @@ namespace ProjectManagerMobile.Models.DTO.Project
     {
         public ProjectDto Project { get; set; }
 
-        List<UserDto> Others { get; set; }
+        public List<OtherProjectMemberDto> Others { get; set; }
     }
 }

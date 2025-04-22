@@ -13,6 +13,8 @@ namespace ProjectManagerMobile.Models.DTO
         public string Name { get; set; }
         public string Surname { get; set; }
 
+        public string FullName => $"{Name} {Surname}";
+
         public string Description { get; set; }
         public string LanguageCode { get; set; }    
         public DateTime RegisteredAt { get; set; }

@@ -3,6 +3,7 @@ using CommunityToolkit.Maui;
 using DevExpress.Maui;
 using FluentIcons.Maui;
 using Microsoft.Extensions.Logging;
+using Plugin.Maui.BottomSheet.Hosting;
 using ProjectManagerMobile.Utilities.Extensions;
 
 namespace ProjectManagerMobile;
@@ -21,6 +22,7 @@ public static class MauiProgram
 			.RegisterServices()
 			.RegisterViews()
 			.RegisterViewModels()
+			.UseBottomSheet()
 			.ConfigureMauiHandlers(handlers =>
 			{
                 handlers.AddSettingsViewHandler();

@@ -3,9 +3,13 @@
     x:Class="ProjectManagerMobile.Views.ProjectPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:androidBottomsheet="http://pluginmauibottomsheet.com/platformconfiguration/android"
+    xmlns:bottomsheet="http://pluginmauibottomsheet.com"
     xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:ProjectManagerMobile.Models.DTO"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    Title="{Binding Title}">
+    xmlns:vm="clr-namespace:ProjectManagerMobile.ViewModels"
+    Title="{Binding ProjectName}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding ShowMorePopupCommand}">
@@ -78,7 +82,7 @@
                 <Label
                     FontFamily="SourceSansRegular"
                     FontSize="18"
-                    Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    Text="{Binding ProjectDescription}"
                     TextColor="{DynamicResource SecondaryTextColor}" />
             </VerticalStackLayout>
 
@@ -92,7 +96,7 @@
                     Text="Current sprints"
                     TextColor="{DynamicResource PrimaryTextColor}" />
 
-                <CollectionView ItemsSource="{Binding Sprints}">
+                <CollectionView ItemsSource="{Binding Sprints}" HeightRequest="110">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border
@@ -154,7 +158,7 @@
                     Text="Completed sprints"
                     TextColor="{DynamicResource PrimaryTextColor}" />
 
-                <CollectionView ItemsSource="{Binding Sprints}">
+                <CollectionView ItemsSource="{Binding Sprints}" HeightRequest="330">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border
@@ -225,6 +229,82 @@
                         Color="{DynamicResource OnPrimaryColor}" />
                 </ImageButton.Source>
             </ImageButton>
+
+            <bottomsheet:BottomSheet
+                x:Name="ModalBottomSheet"
+                Padding="20"
+                androidBottomsheet:BottomSheet.HalfExpandedRatio="0.65"
+                CornerRadius="20"
+                HasHandle="True"
+                IgnoreSafeArea="True"
+                IsCancelable="True"
+                IsModal="True"
+                IsOpen="{Binding IsBottomSheetOpened}"
+                States="Medium, Large">
+
+                <bottomsheet:BottomSheet.Content>
+                    <bottomsheet:BottomSheetContent>
+                        <bottomsheet:BottomSheetContent.ContentTemplate>
+                            <DataTemplate x:DataType="vm:ProjectViewModel">
+                                <Grid RowDefinitions="Auto, *">
+                                    <Label
+                                        Margin="20"
+                                        FontFamily="SourceSansBold"
+                                        FontSize="18"
+                                        HorizontalOptions="Center"
+                                        Text="Participants"
+                                        TextColor="{DynamicResource PrimaryTextColor}" />
+
+                                    <CollectionView Grid.Row="1" ItemsSource="{Binding Members}">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="local:OtherProjectMemberDto">
+                                                <Grid
+                                                    Padding="10"
+                                                    ColumnDefinitions="Auto, *"
+                                                    ColumnSpacing="10"
+                                                    RowDefinitions="Auto, Auto">
+                                                    <!--  Желтый круг  -->
+                                                    <Frame
+                                                        Grid.RowSpan="2"
+                                                        Margin="0"
+                                                        Padding="0"
+                                                        BackgroundColor="Yellow"
+                                                        CornerRadius="25"
+                                                        HeightRequest="50"
+                                                        HorizontalOptions="Start"
+                                                        VerticalOptions="Center"
+                                                        WidthRequest="50" />
+
+                                                    <!--  Текст  -->
+                                                    <Label
+                                                        Grid.Column="1"
+                                                        FontFamily="SourceSansBold"
+                                                        FontSize="16"
+                                                        HorizontalOptions="StartAndExpand"
+                                                        Text="{Binding User.FullName}"
+                                                        TextColor="{DynamicResource PrimaryTextColor}"
+                                                        VerticalOptions="Center" />
+
+                                                    <Label
+                                                        Grid.Row="1"
+                                                        Grid.Column="1"
+                                                        FontFamily="SourceSansRegular"
+                                                        FontSize="14"
+                                                        HorizontalOptions="StartAndExpand"
+                                                        Text="{Binding User.Username}"
+                                                        TextColor="{DynamicResource SecondaryTextColor}"
+                                                        VerticalOptions="Center" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+
+                                </Grid>
+                            </DataTemplate>
+                        </bottomsheet:BottomSheetContent.ContentTemplate>
+                    </bottomsheet:BottomSheetContent>
+                </bottomsheet:BottomSheet.Content>
+            </bottomsheet:BottomSheet>
 
         </Grid>
 
