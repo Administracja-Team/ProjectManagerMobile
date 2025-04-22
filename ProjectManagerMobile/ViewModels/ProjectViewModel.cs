@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ProjectManagerMobile.Models.DTO;
 using ProjectManagerMobile.Services;
 using ProjectManagerMobile.Services.Interfaces;
+using ProjectManagerMobile.Views.Popups;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -69,6 +71,45 @@ namespace ProjectManagerMobile.ViewModels
         private async Task CreateSprint()
         {
 
+        }
+
+        [RelayCommand]
+        private async Task ShowMorePopup()
+        {
+            var popup = new ProjectSettingsPopup(this);
+            await Shell.Current.CurrentPage.ShowPopupAsync(popup);
+        }
+
+        [RelayCommand]
+        private async Task ShowInvitationPopup()
+        {
+            try
+            {
+                IsBusy = true;
+
+                var token = await _tokenStorageService.GetBearerTokenAsync();
+                var response = await _projectApi.CreateInvitationCode(token, _projectId);
+                if (response.IsSuccessful)
+                {
+                    var details = response.Content;
+
+                    var popup = new InvitationPopup(details);
+                    await Shell.Current.CurrentPage.ShowPopupAsync(popup);
+                }
+                else
+                {
+                    var message = JsonSerializer.Deserialize<ErrorResponse>(response.Error.Content).Message;
+                    await Toast.Make(message).Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                await Toast.Make(ex.Message).Show();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         public async Task LoadDataAsync(int projectId)

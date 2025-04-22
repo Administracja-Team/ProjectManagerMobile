@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="ProjectManagerMobile.Views.Popups.InvitationPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Color="Transparent">
+
+    <Border Padding="20" Background="{DynamicResource SecondaryBackgroundColor}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="30" />
+        </Border.StrokeShape>
+
+        <VerticalStackLayout Spacing="10" WidthRequest="350">
+
+            <Label
+                FontFamily="SourceSansRegular"
+                FontSize="26"
+                HorizontalOptions="Center"
+                Text="Add participants"
+                TextColor="{DynamicResource PrimaryTextColor}" />
+
+
+                <Label
+                    FontFamily="SourceSansRegular" x:Name="InvitationCodeLabel"
+                    FontSize="20" HorizontalOptions="Center"
+                    Text="Invitation code: "
+                    TextColor="{DynamicResource SecondaryTextColor}" />
+
+            <Label
+                    FontFamily="SourceSansRegular"
+                    FontSize="20" HorizontalOptions="Center" x:Name="ExpiresAtLabel"
+                    Text="Expires at: "
+                    TextColor="{DynamicResource SecondaryTextColor}" />
+
+
+            <Button
+                BackgroundColor="{DynamicResource PrimaryColor}"
+                Clicked="Button_Clicked"
+                CornerRadius="20"
+                FontFamily="SourceSansRegular"
+                FontSize="22"
+                HeightRequest="60"
+                Text="Copy code to clipboard"
+                TextColor="{DynamicResource OnPrimaryColor}" />
+
+        </VerticalStackLayout>
+    </Border>
+
+</toolkit:Popup>
