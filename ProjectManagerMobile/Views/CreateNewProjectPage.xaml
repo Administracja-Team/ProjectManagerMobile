@@ -5,16 +5,57 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    Title="New Project">
+    Title="New Project"
+    Background="{DynamicResource SecondaryBackgroundColor}">
+
+    <ContentPage.Resources>
+        <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding SaveUserInfoCommand}">
+        <ToolbarItem Command="{Binding CreateProjectCommand}">
             <ToolbarItem.IconImageSource>
                 <ic:FluentImageSource Icon="Checkmark" IconVariant="Filled" />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <Grid />
+    <Grid>
+        <VerticalStackLayout Padding="20" IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
+            <Label
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                HorizontalOptions="Start"
+                Text="Project name"
+                TextColor="{DynamicResource PrimaryColor}" />
+            <Entry
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                Text="{Binding Name}"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+
+            <Label
+                Margin="0,20,0,0"
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                HorizontalOptions="Start"
+                Text="Project goal"
+                TextColor="{DynamicResource PrimaryColor}" />
+            <Editor
+                AutoSize="TextChanges"
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                Text="{Binding Description}"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+        </VerticalStackLayout>
+
+        <ActivityIndicator
+            IsEnabled="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            WidthRequest="40"
+            Color="{DynamicResource PrimaryColor}" />
+    </Grid>
+
 
 </ContentPage>

@@ -8,6 +8,8 @@ namespace ProjectManagerMobile.Models
 {
     public class ProjectModel
     {
+
+        public long Id { get; set; }
         public string Name { get; set; }
 
         public string OwnerName { get; set; }

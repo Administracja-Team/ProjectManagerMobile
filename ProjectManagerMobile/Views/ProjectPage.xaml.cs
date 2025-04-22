@@ -1,19 +1,28 @@
+
 using ProjectManagerMobile.ViewModels;
 
 namespace ProjectManagerMobile.Views;
 
-public partial class ProjectsListPage : ContentPage
+[QueryProperty(nameof(ProjectId), "projectId")]
+public partial class ProjectPage : ContentPage
 {
-
+    private ProjectViewModel _projectVM;
     private bool _isFloatingButtonVisible = true;
-    private ProjectsListViewModel _projectListVM;
-    public ProjectsListPage(ProjectsListViewModel projectsVM)
-	{
-		InitializeComponent();
+    public int ProjectId { get; set; }
 
-		BindingContext = projectsVM;
-        _projectListVM = projectsVM;
-	}
+    public ProjectPage(ProjectViewModel projectVM)
+    {
+        InitializeComponent();
+
+        BindingContext = projectVM;
+        _projectVM = projectVM;
+    }
+
+    protected override async void OnAppearing()
+    {
+        await _projectVM.LoadDataAsync(ProjectId);
+    }
+
 
     protected async void OnCollectionViewScrolled(object sender, DevExpress.Maui.CollectionView.DXCollectionViewScrolledEventArgs e)
     {
@@ -63,10 +72,4 @@ public partial class ProjectsListPage : ContentPage
     }
 
 
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-
-        await _projectListVM.LoadDataAsync();
-    }
 }

@@ -119,6 +119,7 @@ namespace ProjectManagerMobile.ViewModels
                 FullName = $"{FirstName} {LastName}";
                 Username = user.Username;
                 Email = user.Email;
+                About = user.Description;
             }
             else
             {

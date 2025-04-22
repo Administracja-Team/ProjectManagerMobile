@@ -10,11 +10,11 @@ public partial class ConnectToProjectPopup : Popup
 	{
 		InitializeComponent();
 
-		BindingContext = true;
+		BindingContext = connectToProjectVM;
 	}
 
     private async void Button_Clicked(object sender, EventArgs e)
     {
-		await this.CloseAsync();
+		//await this.CloseAsync();
     }
 }

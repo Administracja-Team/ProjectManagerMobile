@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProjectManagerMobile.Views.ProjectPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding ShowMorePopupCommand}">
+            <ToolbarItem.IconImageSource>
+                <ic:FluentImageSource Icon="MoreVertical" IconVariant="Filled" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+
+        <Grid
+            Padding="20"
+            ColumnDefinitions="Auto, *"
+            ColumnSpacing="10"
+            RowDefinitions="Auto, Auto, Auto, Auto, *">
+            <Image
+                HeightRequest="100"
+                Source="dotnet_bot"
+                WidthRequest="100" />
+
+            <VerticalStackLayout
+                Grid.Row="0"
+                Grid.Column="1"
+                Spacing="-15"
+                VerticalOptions="Center">
+                <Button
+                    Padding="20,0"
+                    BackgroundColor="Transparent"
+                    CornerRadius="28"
+                    FontFamily="SourceSansBold"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text="{Binding Owner, StringFormat='{0} (Owner)'}"
+                    TextColor="{DynamicResource PrimaryTextColor}" />
+
+                <Button
+                    Margin="0,0"
+                    Padding="20,0"
+                    BackgroundColor="Transparent"
+                    Command="{Binding ShowParticipantsCommand}"
+                    CornerRadius="28"
+                    FontFamily="SourceSansBold"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text="View participants"
+                    TextColor="{DynamicResource PrimaryTextColor}" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2">
+                <Label
+                    FontFamily="SourceSansBold"
+                    FontSize="16"
+                    Text="Term of works"
+                    TextColor="{DynamicResource PrimaryTextColor}" />
+
+                <Label
+                    FontFamily="SourceSansRegular"
+                    FontSize="18"
+                    Text="01.06.2025 - 16.07.2025"
+                    TextColor="{DynamicResource SecondaryTextColor}" />
+
+                <Label
+                    Margin="0,20,0,0"
+                    FontFamily="SourceSansBold"
+                    FontSize="16"
+                    Text="Project goal and description"
+                    TextColor="{DynamicResource PrimaryTextColor}" />
+
+                <Label
+                    FontFamily="SourceSansRegular"
+                    FontSize="18"
+                    Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    TextColor="{DynamicResource SecondaryTextColor}" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="0,20,0,0">
+                <Label
+                    FontFamily="SourceSansBold"
+                    FontSize="16"
+                    Text="Current sprints"
+                    TextColor="{DynamicResource PrimaryTextColor}" />
+
+                <CollectionView ItemsSource="{Binding Sprints}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Margin="0,5"
+                                Padding="20"
+                                BackgroundColor="{DynamicResource SecondaryColor}"
+                                StrokeShape="RoundRectangle 20">
+
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.GoToProjectCommand, Source={x:Reference Name=ProjectsPage}}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+
+                                <Grid
+                                    ColumnDefinitions="Auto, *, Auto"
+                                    ColumnSpacing="15"
+                                    RowSpacing="5">
+
+                                    <Border
+                                        Grid.Row="1"
+                                        Grid.RowSpan="2"
+                                        BackgroundColor="Transparent"
+                                        HeightRequest="60"
+                                        Stroke="{DynamicResource OnPrimaryColor}"
+                                        StrokeShape="RoundRectangle 100"
+                                        StrokeThickness="1"
+                                        WidthRequest="60" />
+
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="SourceSansRegular"
+                                        FontSize="20"
+                                        Text="Sprint name"
+                                        TextColor="{DynamicResource OnPrimaryColor}"
+                                        VerticalOptions="Center" />
+
+
+                                    <Label
+                                        Grid.Column="2"
+                                        FontFamily="SourceSansRegular"
+                                        FontSize="16"
+                                        Text="21.05"
+                                        TextColor="{DynamicResource OnPrimaryColor}"
+                                        VerticalOptions="Center" />
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                Margin="0,20,0,0">
+                <Label
+                    FontFamily="SourceSansBold"
+                    FontSize="16"
+                    Text="Completed sprints"
+                    TextColor="{DynamicResource PrimaryTextColor}" />
+
+                <CollectionView ItemsSource="{Binding Sprints}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Margin="0,5"
+                                Padding="20"
+                                BackgroundColor="#4D6E6E"
+                                StrokeShape="RoundRectangle 20">
+
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.GoToProjectCommand, Source={x:Reference Name=ProjectsPage}}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+
+                                <Grid
+                                    ColumnDefinitions="Auto, *, Auto"
+                                    ColumnSpacing="15"
+                                    RowSpacing="5">
+
+                                    <Border
+                                        Grid.Row="1"
+                                        Grid.RowSpan="2"
+                                        BackgroundColor="Transparent"
+                                        HeightRequest="60"
+                                        Stroke="{DynamicResource OnPrimaryColor}"
+                                        StrokeShape="RoundRectangle 100"
+                                        StrokeThickness="1"
+                                        WidthRequest="60" />
+
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="SourceSansRegular"
+                                        FontSize="20"
+                                        Text="Sprint name"
+                                        TextColor="{DynamicResource OnPrimaryColor}"
+                                        VerticalOptions="Center" />
+
+
+                                    <Label
+                                        Grid.Column="2"
+                                        FontFamily="SourceSansRegular"
+                                        FontSize="16"
+                                        Text="21.05"
+                                        TextColor="{DynamicResource OnPrimaryColor}"
+                                        VerticalOptions="Center" />
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+            <ImageButton
+                x:Name="FloatingButton"
+                Grid.Row="4"
+                Grid.ColumnSpan="2"
+                Aspect="AspectFill"
+                BackgroundColor="{DynamicResource PrimaryColor}"
+                Command="{Binding CreateSprintCommand}"
+                CornerRadius="50"
+                HeightRequest="65"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                WidthRequest="65">
+                <ImageButton.Source>
+                    <ic:FluentImageSource
+                        Icon="Add"
+                        IconVariant="Filled"
+                        Color="{DynamicResource OnPrimaryColor}" />
+                </ImageButton.Source>
+            </ImageButton>
+
+        </Grid>
+
+    </ScrollView>
+
+</ContentPage>

@@ -3,8 +3,9 @@
     x:Class="ProjectManagerMobile.Views.ProfilePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    Title="Profile"  xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"> 
+    Title="Profile">
 
     <ContentPage.Resources>
         <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
@@ -17,6 +18,8 @@
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
+
+    <ScrollView>
 
     <Grid>
         <VerticalStackLayout Padding="20" IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
@@ -103,24 +106,25 @@
             <Label
                 Margin="5"
                 FontFamily="OpenSansBold"
-                FontSize="20"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"
+                FontSize="18"
+                HorizontalOptions="Start"
+                HorizontalTextAlignment="Start"
                 Text="{Binding About}"
                 TextColor="{DynamicResource TertiaryTextColor}" />
 
 
             <Button
-                        Margin="0, 30"
-                        Padding="0,15"
-                BorderWidth="1"
+                Margin="0,30"
+                Padding="0,15"
+                BackgroundColor="Transparent"
                 BorderColor="{DynamicResource PrimaryColor}"
-                        BackgroundColor="Transparent"
-                        CornerRadius="28"
-                        FontFamily="SourceSansRegular"
-                        FontSize="18" Command="{Binding LogoutCommand}"
-                        Text="Logout"
-                        TextColor="{DynamicResource PrimaryColor}" />
+                BorderWidth="1"
+                Command="{Binding LogoutCommand}"
+                CornerRadius="28"
+                FontFamily="SourceSansRegular"
+                FontSize="18"
+                Text="Logout"
+                TextColor="{DynamicResource PrimaryColor}" />
         </VerticalStackLayout>
 
         <ActivityIndicator
@@ -130,6 +134,8 @@
             WidthRequest="40"
             Color="{DynamicResource PrimaryColor}" />
     </Grid>
+
+    </ScrollView>
 
 
 

@@ -20,6 +20,7 @@ namespace ProjectManagerMobile.Utilities.Extensions
             builder.Services.AddTransient<ProfileEditPage>();
             builder.Services.AddTransient<SettingsPage>();
             builder.Services.AddTransient<CreateNewProjectPage>();
+            builder.Services.AddTransient<ProjectPage>();
 
 
             return builder;
@@ -34,6 +35,7 @@ namespace ProjectManagerMobile.Utilities.Extensions
             builder.Services.AddTransient<ProfileEditViewModel>();
             builder.Services.AddTransient<SettingsViewModel>();
             builder.Services.AddTransient<CreateNewProjectViewModel>();
+            builder.Services.AddTransient<ProjectViewModel>();
 
             return builder;
         }
@@ -47,6 +49,11 @@ namespace ProjectManagerMobile.Utilities.Extensions
 
             builder.Services
                 .AddRefitClient<IUserApi>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://138.201.187.238:8888"));
+
+
+            builder.Services
+                .AddRefitClient<IProjectApi>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://138.201.187.238:8888"));
 
 

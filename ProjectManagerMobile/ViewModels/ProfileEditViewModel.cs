@@ -65,7 +65,8 @@ namespace ProjectManagerMobile.ViewModels
             var newData = new UserUpdateProfileRequest
             {
                 Name = FirstName,
-                Surname = LastName
+                Surname = LastName,
+                Description = About
             };
 
             var response = await _userApi.UpdateUserProfile(token, newData);

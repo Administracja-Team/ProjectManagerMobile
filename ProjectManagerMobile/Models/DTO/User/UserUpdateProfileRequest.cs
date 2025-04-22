@@ -12,6 +12,7 @@ namespace ProjectManagerMobile.Models.DTO
         public string Name { get; set; }
         public string Surname { get; set; }
 
+        public string Description { get; set; }
         //public string Username { get; set; }
 
         //[JsonPropertyName("language_code")]

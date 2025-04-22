@@ -12,7 +12,9 @@ namespace ProjectManagerMobile.Models.DTO
         public string Email { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string LanguageCode { get; set; }
+
+        public string Description { get; set; }
+        public string LanguageCode { get; set; }    
         public DateTime RegisteredAt { get; set; }
     }
 
