@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="ProjectManagerMobile.Views.ProjectPage"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui" BackgroundColor="{DynamicResource SecondaryBackgroundColor}"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:androidBottomsheet="http://pluginmauibottomsheet.com/platformconfiguration/android"
     xmlns:bottomsheet="http://pluginmauibottomsheet.com"
@@ -96,7 +96,7 @@
                     Text="Current sprints"
                     TextColor="{DynamicResource PrimaryTextColor}" />
 
-                <CollectionView ItemsSource="{Binding Sprints}" HeightRequest="110">
+                <CollectionView ItemsSource="{Binding Sprints}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border
@@ -158,7 +158,7 @@
                     Text="Completed sprints"
                     TextColor="{DynamicResource PrimaryTextColor}" />
 
-                <CollectionView ItemsSource="{Binding Sprints}" HeightRequest="330">
+                <CollectionView ItemsSource="{Binding Sprints}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border
@@ -216,7 +216,7 @@
                 Grid.ColumnSpan="2"
                 Aspect="AspectFill"
                 BackgroundColor="{DynamicResource PrimaryColor}"
-                Command="{Binding CreateSprintCommand}"
+                Command="{Binding GoToCreateSprintCommand}"
                 CornerRadius="50"
                 HeightRequest="65"
                 HorizontalOptions="End"
@@ -263,6 +263,9 @@
                                                     ColumnDefinitions="Auto, *"
                                                     ColumnSpacing="10"
                                                     RowDefinitions="Auto, Auto">
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding BindingContext.ShowMemberActionsPopupCommand, Source={RelativeSource AncestorType={x:Type bottomsheet:BottomSheet}}}" CommandParameter="{Binding .}" />
+                                                    </Grid.GestureRecognizers>
                                                     <!--  Желтый круг  -->
                                                     <Frame
                                                         Grid.RowSpan="2"
@@ -276,24 +279,52 @@
                                                         WidthRequest="50" />
 
                                                     <!--  Текст  -->
-                                                    <Label
-                                                        Grid.Column="1"
-                                                        FontFamily="SourceSansBold"
-                                                        FontSize="16"
-                                                        HorizontalOptions="StartAndExpand"
-                                                        Text="{Binding User.FullName}"
-                                                        TextColor="{DynamicResource PrimaryTextColor}"
-                                                        VerticalOptions="Center" />
+                                                    <HorizontalStackLayout Grid.Column="1" Spacing="10">
+                                                        <Label
+                                                            FontFamily="SourceSansBold"
+                                                            FontSize="18"
+                                                            HorizontalOptions="StartAndExpand"
+                                                            Text="{Binding User.FullName}"
+                                                            TextColor="{DynamicResource PrimaryTextColor}"
+                                                            VerticalOptions="Center" />
 
-                                                    <Label
+                                                        <Border Stroke="{DynamicResource SecondaryColor}" Padding="5,0" StrokeShape="RoundRectangle 20">
+                                                            <Label
+                                                                FontFamily="SourceSansRegular"
+                                                                FontSize="12"
+                                                                HorizontalOptions="StartAndExpand"
+                                                                Text="{Binding SystemRole}"
+                                                                TextColor="{DynamicResource PrimaryTextColor}"
+                                                                VerticalOptions="Center" />
+                                                        </Border>
+                                                    </HorizontalStackLayout>
+
+
+                                                    <HorizontalStackLayout
                                                         Grid.Row="1"
                                                         Grid.Column="1"
-                                                        FontFamily="SourceSansRegular"
-                                                        FontSize="14"
-                                                        HorizontalOptions="StartAndExpand"
-                                                        Text="{Binding User.Username}"
-                                                        TextColor="{DynamicResource SecondaryTextColor}"
-                                                        VerticalOptions="Center" />
+                                                        Spacing="10">
+                                                        <Label
+                                                            FontFamily="SourceSansRegular"
+                                                            FontSize="16"
+                                                            HorizontalOptions="StartAndExpand"
+                                                            Text="{Binding User.Username}"
+                                                            TextColor="{DynamicResource SecondaryTextColor}"
+                                                            VerticalOptions="Center" />
+
+
+                                                        <Label
+                                                            FontFamily="SourceSansBold"
+                                                            FontSize="16"
+                                                            HorizontalOptions="StartAndExpand"
+                                                            Text="{Binding DescriptiveRole, StringFormat='[{0}]'}"
+                                                            TextColor="{DynamicResource PrimaryTextColor}"
+                                                            VerticalOptions="Center" />
+
+
+            
+                                                    </HorizontalStackLayout>
+
                                                 </Grid>
                                             </DataTemplate>
                                         </CollectionView.ItemTemplate>

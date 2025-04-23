@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="ProjectManagerMobile.Views.Popups.MemberActionsPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Color="Transparent">
+
+    <Border Padding="20" Background="{DynamicResource SecondaryBackgroundColor}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="30" />
+        </Border.StrokeShape>
+
+        <VerticalStackLayout Spacing="10" WidthRequest="350">
+
+            <Label
+                FontFamily="SourceSansRegular"
+                FontSize="26"
+                HorizontalOptions="Center"
+                Text="Select action"
+                TextColor="{DynamicResource PrimaryTextColor}" />
+
+            <Button
+                BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                Command="{Binding GoToConnectToProjectCommand}"
+                CornerRadius="20" 
+                FontSize="22" FontFamily="SourceSansRegular"
+                HeightRequest="60" Clicked="Button_Clicked"
+                Text="View profile"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+            <Button
+                BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                Command="{Binding ShowSetRolePopupCommand}"
+                CornerRadius="20"
+                FontSize="22"
+                HeightRequest="60"
+                Clicked="Button_Clicked"
+                Text="Set descriptive role" FontFamily="SourceSansRegular"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+
+            <Button
+                BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                Command="{Binding SetAsAdminCommand}"
+                CornerRadius="20"
+                FontSize="22"
+                HeightRequest="60"
+                Clicked="Button_Clicked"
+                Text="Switch system role" FontFamily="SourceSansRegular"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+
+            <Button
+            BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+            Command="{Binding DeleteMemberCommand}"
+            CornerRadius="20"
+            FontSize="22" Clicked="Button_Clicked"
+            HeightRequest="60"
+            
+            Text="Delete from project" FontFamily="SourceSansRegular"
+            TextColor="Red" />
+
+        </VerticalStackLayout>
+    </Border>
+
+</toolkit:Popup>

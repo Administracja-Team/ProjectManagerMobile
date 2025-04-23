@@ -19,6 +19,6 @@ namespace ProjectManagerMobile.Models.DTO
         public string SystemRole { get; set; } = "MEMBER"; // Could be OWNER, ADMIN, MEMBER
 
         [JsonPropertyName("descriptive_role")]
-        public string DescriptiveRole { get; set; } = string.Empty;
+        public string DescriptiveRole { get; set; }
     }
 }

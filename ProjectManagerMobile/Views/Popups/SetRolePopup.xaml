@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="ProjectManagerMobile.Views.Popups.SetRolePopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:ProjectManagerMobile.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Color="Transparent">
+
+    <Border Padding="20" Background="{DynamicResource SecondaryBackgroundColor}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="30" />
+        </Border.StrokeShape>
+
+        <VerticalStackLayout Spacing="10" WidthRequest="350">
+
+            <Label
+                FontFamily="SourceSansRegular"
+                FontSize="26"
+                HorizontalOptions="Center"
+                Text="Set role"
+                TextColor="{DynamicResource PrimaryTextColor}" />
+
+            <controls:FilledEntryControl
+                FocusColor="{DynamicResource PrimaryTextColor}"
+                FontSize="18"
+                HeightRequest="60"
+                Placeholder="Put role..."
+                PlaceholderBackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                PlaceholderFontSize="12"
+                Text="{Binding CurrentRoleField}"
+                TextColor="{DynamicResource SecondaryTextColor}"
+                UnfocusColor="{DynamicResource SecondaryTextColor}" />
+
+            <Button
+                BackgroundColor="{DynamicResource PrimaryColor}"
+                Clicked="Button_Clicked"
+                Command="{Binding ApplyRoleCommand}"
+                CornerRadius="20"
+                FontFamily="SourceSansRegular"
+                FontSize="22" 
+                HeightRequest="60"
+                Text="Apply"
+                TextColor="{DynamicResource OnPrimaryColor}" />
+
+        </VerticalStackLayout>
+    </Border>
+
+</toolkit:Popup>

@@ -16,6 +16,8 @@ namespace ProjectManagerMobile
             Routing.RegisterRoute(nameof(ProfileEditPage), typeof(ProfileEditPage));
             Routing.RegisterRoute(nameof(CreateNewProjectPage), typeof(CreateNewProjectPage));
             Routing.RegisterRoute(nameof(ProjectPage), typeof(ProjectPage));
+            Routing.RegisterRoute(nameof(CreateSprintPage), typeof(CreateSprintPage));
+            Routing.RegisterRoute(nameof(CreateTaskPage), typeof(CreateTaskPage));
         }
     }
 }

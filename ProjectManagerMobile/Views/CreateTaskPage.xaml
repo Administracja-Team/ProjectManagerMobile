@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:vm="clr-namespace:ProjectManagerMobile.ViewModels"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" BackgroundColor="{DynamicResource SecondaryBackgroundColor}"
+             x:Class="ProjectManagerMobile.Views.CreateTaskPage" xmlns:converters="clr-namespace:ProjectManagerMobile.Utilities.Converters"
+             Title="New Task">
+
+    <ContentPage.Resources>
+        <converters:PriorityToColorConverter x:Key="PriorityToColorConverter" />
+        <converters:IsPrioritySelectedConverter x:Key="IsPrioritySelectedConverter" />
+    </ContentPage.Resources>
+    
+        <VerticalStackLayout Padding="20">
+            <Label
+                Margin="0,0,0,0"
+                FontFamily="SourceSansBold"
+                FontSize="18"
+                Text="Name"
+                TextColor="{DynamicResource PrimaryTextColor}" />
+
+            <Entry
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                Text="{Binding TaskName}"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+
+
+            <Label
+                Margin="0,20,0,0"
+                FontFamily="SourceSansBold"
+                FontSize="18"
+                Text="Description"
+                TextColor="{DynamicResource PrimaryTextColor}" />
+
+
+            <Editor
+                AutoSize="TextChanges"
+                FontFamily="SourceSansRegular"
+                FontSize="20"
+                Text="{Binding TaskDescription}"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+
+        <Label
+                Margin="0,20,0,0"
+                FontFamily="SourceSansBold"
+                FontSize="18"
+                Text="Priority"
+                TextColor="{DynamicResource PrimaryTextColor}" />
+
+        <Grid Padding="10"
+          ColumnDefinitions="*, *, *"
+          ColumnSpacing="0">
+            <!-- Low Button -->
+            <Border Grid.Column="0"
+                StrokeShape="RoundRectangle 10 0 10 0"
+                StrokeThickness="2"
+                Stroke="Transparent"
+                BackgroundColor="{DynamicResource PrimaryBackgroundColor}">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Border"
+                                     Binding="{Binding SelectedPriority, Converter={StaticResource IsPrioritySelectedConverter}, ConverterParameter=Low}"
+                                     Value="True">
+                                <Setter Property="BackgroundColor"
+                                    Value="{Binding Source={x:Static vm:Priority.Low}, Converter={StaticResource PriorityToColorConverter}}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Label Text="Low"
+                   TextColor="Black"
+                   FontSize="16"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Padding="10" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectPriorityCommand}"
+                                      CommandParameter="{x:Static vm:Priority.Low}" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Medium Button -->
+            <Border Grid.Column="1"
+                StrokeShape="RoundRectangle 0 0 0 0"
+                StrokeThickness="2"
+                Stroke="Transparent"
+                BackgroundColor="{DynamicResource PrimaryBackgroundColor}">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Border"
+                                     Binding="{Binding SelectedPriority, Converter={StaticResource IsPrioritySelectedConverter}, ConverterParameter=Medium}"
+                                     Value="True">
+                                <Setter Property="BackgroundColor"
+                                    Value="{Binding Source={x:Static vm:Priority.Medium}, Converter={StaticResource PriorityToColorConverter}}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Label Text="Medium"
+                   TextColor="Black"
+                   FontSize="16"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Padding="10" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectPriorityCommand}"
+                                      CommandParameter="{x:Static vm:Priority.Medium}" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- High Button -->
+            <Border Grid.Column="2"
+                StrokeShape="RoundRectangle 0 10 0 10"
+                StrokeThickness="2"
+                Stroke="Transparent"
+                BackgroundColor="{DynamicResource PrimaryBackgroundColor}">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Border"
+                                     Binding="{Binding SelectedPriority, Converter={StaticResource IsPrioritySelectedConverter}, ConverterParameter=High}"
+                                     Value="True">
+                                <Setter Property="BackgroundColor"
+                                    Value="{Binding Source={x:Static vm:Priority.High}, Converter={StaticResource PriorityToColorConverter}}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Label Text="High"
+                   TextColor="Black"
+                   FontSize="16"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Padding="10" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectPriorityCommand}"
+                                      CommandParameter="{x:Static vm:Priority.High}" />
+                </Border.GestureRecognizers>
+            </Border>
+        </Grid>
+
+        <Label
+                Margin="0,20,0,0"
+                FontFamily="SourceSansBold"
+                FontSize="18"
+                Text="Select a participant for this task"
+                TextColor="{DynamicResource PrimaryTextColor}" />
+
+
+    </VerticalStackLayout>
+    
+</ContentPage>

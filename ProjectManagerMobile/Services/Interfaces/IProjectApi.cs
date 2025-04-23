@@ -37,19 +37,19 @@ namespace ProjectManagerMobile.Services.Interfaces
             [AliasAs("code")] string code);
 
         [Patch("/project/member/{member_id}/system-role")]
-        Task<ApiResponse<object>> SetMemberSystemRole(
+        Task<ApiResponse<string>> SetMemberSystemRole(
             [Header("Authorization")] string accessToken,
             [AliasAs("member_id")] long memberId,
             [Body] StringRequest role);
 
         [Post("/project/member/{member_id}/descriptive-role")]
-        Task<ApiResponse<object>> SetDescriptiveRole(
+        Task<ApiResponse<string>> SetDescriptiveRole(
             [Header("Authorization")] string accessToken,
             [AliasAs("member_id")] long memberId,
             [Body] StringRequest role);
 
         [Delete("/project/member/{member_id}/delete")]
-        Task<ApiResponse<object>> DeleteMemberFromProject(
+        Task<ApiResponse<string>> DeleteMemberFromProject(
             [Header("Authorization")] string accessToken,
             [AliasAs("member_id")] long memberId);
     }

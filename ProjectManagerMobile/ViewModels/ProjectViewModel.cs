@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using ProjectManagerMobile.Models.DTO;
 using ProjectManagerMobile.Services;
 using ProjectManagerMobile.Services.Interfaces;
+using ProjectManagerMobile.Views;
 using ProjectManagerMobile.Views.Popups;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,9 @@ namespace ProjectManagerMobile.ViewModels
         private long _projectId;
         private IProjectApi _projectApi;
         private TokenStorageService _tokenStorageService;
+
+        private long _currentMemberId;
+        private string _currentMemberSystemRole;
         public ProjectViewModel(IProjectApi projectApi, TokenStorageService tokenStorageService)
         {
             _projectApi = projectApi;
@@ -42,22 +46,14 @@ namespace ProjectManagerMobile.ViewModels
         [ObservableProperty]
         public partial bool IsBottomSheetOpened { get; set; } = false;
 
+        [ObservableProperty]
+        public partial string CurrentRoleField { get; set; }
+
         public ObservableCollection<OtherProjectMemberDto> Members { get; set; } = new ObservableCollection<OtherProjectMemberDto>();
 
         public ObservableCollection<string> Sprints { get; set; } = new ObservableCollection<string>() 
         {
             "wafwaf",
-            "fwafawf",
-            "wafawf",
-            "wafawf",
-            "wafawf",
-            "wafawf",
-            "wafawf",
-            "wafawf",
-            "wafawf",
-            "wafawf",
-            "wafawf",
-            "wafawf",
         };
 
 
@@ -74,10 +70,128 @@ namespace ProjectManagerMobile.ViewModels
         }
 
         [RelayCommand]
+        private async Task DeleteMemberFromProject()
+        {
+            try
+            {
+                IsBusy = true;
+
+                var token = await _tokenStorageService.GetBearerTokenAsync();
+                var response = await _projectApi.DeleteMemberFromProject(token, _currentMemberId);
+                if (response.IsSuccessful)
+                {
+                    await LoadDataAsync(_projectId);
+                }
+                else
+                {
+                    var message = JsonSerializer.Deserialize<ErrorResponse>(response.Error.Content).Message;
+                    await Toast.Make(message).Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                await Toast.Make(ex.Message).Show();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        private async Task SetAsAdmin()
+        {
+            try
+            {
+                IsBusy = true;
+
+                var token = await _tokenStorageService.GetBearerTokenAsync();
+                var response = await _projectApi.SetMemberSystemRole(token, _currentMemberId, new StringRequest
+                {
+                    Payload = _currentMemberSystemRole == "MEMBER" ? "ADMIN" : "MEMBER"
+                });
+                if (response.IsSuccessful)
+                {
+                    await LoadDataAsync(_projectId);
+                }
+                else
+                {
+                    var message = JsonSerializer.Deserialize<ErrorResponse>(response.Error.Content).Message;
+                    await Toast.Make(message).Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                await Toast.Make(ex.Message).Show();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        private async Task ApplyRole()
+        {
+            try
+            {
+                IsBusy = true;
+
+                var token = await _tokenStorageService.GetBearerTokenAsync();
+                var response = await _projectApi.SetDescriptiveRole(token, _currentMemberId, new StringRequest
+                {
+                    Payload = CurrentRoleField
+                });
+                if (response.IsSuccessful)
+                {
+                    await LoadDataAsync(_projectId);
+                }
+                else
+                {
+                    var message = JsonSerializer.Deserialize<ErrorResponse>(response.Error.Content).Message;
+                    await Toast.Make(message).Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                await Toast.Make(ex.Message).Show();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        private async Task ShowSetRolePopup()
+        {
+            CurrentRoleField = string.Empty;
+            var popup = new SetRolePopup(this);
+            await Shell.Current.CurrentPage.ShowPopupAsync(popup);
+        }
+
+        [RelayCommand]
         private async Task ShowMorePopup()
         {
             var popup = new ProjectSettingsPopup(this);
             await Shell.Current.CurrentPage.ShowPopupAsync(popup);
+        }
+
+        [RelayCommand]
+        private async Task ShowMemberActionsPopup(OtherProjectMemberDto member)
+        {
+            _currentMemberId = member.MemberId;
+            _currentMemberSystemRole = member.SystemRole;
+
+            var popup = new MemberActionsPopup(this);
+            await Shell.Current.CurrentPage.ShowPopupAsync(popup);
+        }
+
+
+        [RelayCommand]
+        private async Task GoToCreateSprint()
+        {
+            await Shell.Current.GoToAsync(nameof(CreateSprintPage));
         }
 
         [RelayCommand]
@@ -112,7 +226,7 @@ namespace ProjectManagerMobile.ViewModels
             }
         }
 
-        public async Task LoadDataAsync(int projectId)
+        public async Task LoadDataAsync(long projectId)
         {
             try
             {
@@ -131,7 +245,7 @@ namespace ProjectManagerMobile.ViewModels
             }
         }
 
-        private async Task LoadProjectData(string? token, int projectId)
+        private async Task LoadProjectData(string? token, long projectId)
         {
             var response = await _projectApi.GetProjectDetails(token, projectId);
             if (response.IsSuccessful)
@@ -142,6 +256,7 @@ namespace ProjectManagerMobile.ViewModels
                 ProjectName = details.Project.Name;
                 ProjectDescription = details.Project.Description ?? "No info";
 
+                Members.Clear();
                 foreach (var p in details.Others)
                 {
                     Members.Add(p);
