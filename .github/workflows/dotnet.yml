@@ -31,7 +31,7 @@ jobs:
 
     # Шаг 6: Создание артефактов сборки (например, для Android или iOS)
     - name: Publish MAUI app
-      run: dotnet publish -f:net6.0-android -c Release -o ./output/android
+      run: dotnet publish -f:net9.0-android -c Release -o ./output/android
 
     # Шаг 7: Загружаем артефакты (APK, или другие файлы)
     - name: Upload APK
