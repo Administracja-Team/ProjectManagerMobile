@@ -42,7 +42,9 @@ namespace ProjectManagerMobile.ViewModels
         private async Task GoToConnectToProject()
         {
             var popupVM = new ConnectToProjectViewModel(_projectApi, _tokenStorageService);
+            popupVM.ProjectConnectedSuccessfully += async (c, e) => await LoadDataAsync();
             var popup = new ConnectToProjectPopup(popupVM);
+            
             await Shell.Current.CurrentPage.ShowPopupAsync(popup);
         }
 

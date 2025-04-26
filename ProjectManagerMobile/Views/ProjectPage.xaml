@@ -269,7 +269,7 @@
                                                     <Grid.GestureRecognizers>
                                                         <TapGestureRecognizer Command="{Binding BindingContext.ShowMemberActionsPopupCommand, Source={RelativeSource AncestorType={x:Type bottomsheet:BottomSheet}}}" CommandParameter="{Binding .}" />
                                                     </Grid.GestureRecognizers>
-                                                    <!--  Желтый круг  -->
+       
 
                                                     <Border Grid.RowSpan="2" Stroke="Transparent" StrokeShape="RoundRectangle 50" WidthRequest="50" HeightRequest="50">
                                                         <Image Aspect="AspectFill" Source="{Binding Avatar}" />

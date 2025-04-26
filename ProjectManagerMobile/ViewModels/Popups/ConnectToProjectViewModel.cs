@@ -15,8 +15,11 @@ namespace ProjectManagerMobile.ViewModels.Popups
 {
     public partial class ConnectToProjectViewModel : BaseViewModel
     {
+        public event EventHandler? ProjectConnectedSuccessfully;
+
         private TokenStorageService _tokenStorageService;
         private IProjectApi _projectApi;
+        
         public ConnectToProjectViewModel(IProjectApi projectApi, TokenStorageService tokenStorageService)
         {
             _tokenStorageService = tokenStorageService;
@@ -52,6 +55,8 @@ namespace ProjectManagerMobile.ViewModels.Popups
             if (response.IsSuccessful)
             {
                 await Toast.Make("Successfully added").Show();
+
+                ProjectConnectedSuccessfully?.Invoke(this, EventArgs.Empty);
             }
             else
             {
