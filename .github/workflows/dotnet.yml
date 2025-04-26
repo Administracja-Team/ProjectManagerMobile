@@ -1,0 +1,41 @@
+name: .NET MAUI CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Шаг 1: Получение исходного кода
+    - name: Checkout project
+      uses: actions/checkout@v3
+
+    # Шаг 2: Настройка .NET 9.0 SDK
+    - name: Set up .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0.x'
+
+    # Шаг 3: Восстановление зависимостей проекта
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # Шаг 4: Сборка проекта
+    - name: Build project
+      run: dotnet build --configuration Release
+
+    # Шаг 6: Создание артефактов сборки (например, для Android или iOS)
+    - name: Publish MAUI app
+      run: dotnet publish -f:net6.0-android -c Release -o ./output/android
+
+    # Шаг 7: Загружаем артефакты (APK, или другие файлы)
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: maui-app-apk
+        path: ./output/android/*.apk
