@@ -13,6 +13,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+    # Очистим кэш NuGet
+    - name: Clear NuGet cache
+      run: dotnet nuget locals all --clear
+
     # Шаг 1: Настроим .NET
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
@@ -23,16 +27,20 @@ jobs:
     - name: Install .NET MAUI
       run: dotnet workload install maui
 
-    # Шаг 3: Восстановим зависимости
-    - name: Restore dependencies
-      run: dotnet restore
+    # Шаг 3: Добавляем источник DevExpress в NuGet с ключом
+    - name: Add DevExpress NuGet source
+      run: dotnet nuget add source "https://nuget.devexpress.com/{Your-Token}/api/nuget" --name DevExpress --username ${{ secrets.DEVEXPRESS_NUGET_KEY }} --password ${{ secrets.DEVEXPRESS_NUGET_KEY }} --store-password-in-clear-text
 
-    # Шаг 4: Сборка проекта (без подписи)
+    # Шаг 4: Восстановим зависимости
+    - name: Restore dependencies
+      run: dotnet restore --source https://nuget.org --source "https://nuget.devexpress.com/{Your-Token}/api/nuget"
+
+    # Шаг 5: Сборка проекта (без подписи)
     - name: Build
       run: |
-        dotnet build ProjectManagerMobile/ProjectManagerMobile.csproj -c Release -f net9.0-android --no-restore
+        dotnet build MauiGithubActionsSample/MauiGithubActionsSample.csproj -c Release -f net9.0-android --no-restore
 
-    # Шаг 5: Загружаем артефакты (APK или AAB файлы)
+    # Шаг 6: Загружаем артефакты (APK или AAB файлы)
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4
       with:
