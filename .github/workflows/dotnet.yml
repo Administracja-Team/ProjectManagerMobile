@@ -29,11 +29,11 @@ jobs:
 
     # Шаг 3: Добавляем источник DevExpress в NuGet с ключом
     - name: Add DevExpress NuGet source
-      run: dotnet nuget add source "https://nuget.devexpress.com/{Your-Token}/api/nuget" --name DevExpress --username ${{ secrets.DEVEXPRESS_NUGET_KEY }} --password ${{ secrets.DEVEXPRESS_NUGET_KEY }} --store-password-in-clear-text
-
+      run: dotnet nuget add source "https://nuget.devexpress.com/${{ secrets.DEVEXPRESS_NUGET_KEY }}/api/nuget" --name DevExpress --username ${{ secrets.DEVEXPRESS_NUGET_KEY }} --password ${{ secrets.DEVEXPRESS_NUGET_KEY }} --store-password-in-clear-text
+    
     # Шаг 4: Восстановим зависимости
     - name: Restore dependencies
-      run: dotnet restore --source https://nuget.org --source "https://nuget.devexpress.com/{Your-Token}/api/nuget"
+      run: dotnet restore --source https://nuget.org --source "https://nuget.devexpress.com/${{ secrets.DEVEXPRESS_NUGET_KEY }}/api/nuget"
 
     # Шаг 5: Сборка проекта (без подписи)
     - name: Build
