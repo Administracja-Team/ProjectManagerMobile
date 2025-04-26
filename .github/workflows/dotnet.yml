@@ -28,12 +28,12 @@ jobs:
       run: dotnet workload install maui
 
     # Шаг 3: Добавляем источник DevExpress в NuGet с ключом
-    - name: Add DevExpress NuGet source
-      run: dotnet nuget add source "https://nuget.devexpress.com/${{ secrets.DEVEXPRESS_NUGET_KEY }}/api/nuget" --name DevExpress --username ${{ secrets.DEVEXPRESS_NUGET_KEY }} --password ${{ secrets.DEVEXPRESS_NUGET_KEY }} --store-password-in-clear-text
-    
+    - name: Register DevExpress Source
+      run: dotnet nuget add source https://nuget.devexpress.com/api/v3/index.json -p ${{ secrets.DEVEXPRESS_NUGET_KEY }} -u DevExpress -n devexpress-nuget
+        
     # Шаг 4: Восстановим зависимости
     - name: Restore dependencies
-      run: dotnet restore --source https://nuget.org --source "https://nuget.devexpress.com/${{ secrets.DEVEXPRESS_NUGET_KEY }}/api/nuget"
+      run: dotnet restore --source https://nuget.org --source https://nuget.devexpress.com/api/v3/index.json -u DevExpress -p ${{ secrets.DEVEXPRESS_NUGET_KEY }}
 
     # Шаг 5: Сборка проекта (без подписи)
     - name: Build
