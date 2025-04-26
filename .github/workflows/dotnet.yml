@@ -8,25 +8,38 @@ on:
 
 jobs:
   build:
-
     runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
+    
+    # Шаг 1: Настроим файл keystore
     - name: Setup Keystore File
       run: |
         echo "${{ secrets.KEYSTORE_FILE }}" > myapp.keystore.asc
-        gpg -d --passphrase "${{ secrets.KEYSTORE_PASSWORD_GPG }}" --batch myapp.keystore.asc > myapp.keystore
+        mkdir -p C:/Users/runneradmin/.gnupg
+        echo "use-agent" >> C:/Users/runneradmin/.gnupg/gpg.conf
+        gpg --batch --no-tty --decrypt --passphrase "${{ secrets.KEYSTORE_PASSWORD_GPG }}" --output myapp.keystore myapp.keystore.asc
+
+    # Шаг 2: Настроим .NET
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 9.0.x
+
+    # Шаг 3: Установим .NET MAUI
     - name: Install .NET MAUI
       run: dotnet workload install maui
+
+    # Шаг 4: Восстановим зависимости
     - name: Restore dependencies
       run: dotnet restore
+
+    # Шаг 5: Сборка проекта
     - name: Build
       run: dotnet build MauiGithubActionsSample/MauiGithubActionsSample.csproj -c Release -f net9.0-android /p:AndroidSigningKeyStore=myapp.keystore /p:AndroidSigningKeyAlias=ghactionskey /p:AndroidSigningKeyPass="${{ secrets.KEYSTORE_PASSWORD }}" /p:AndroidSigningStorePass="${{ secrets.KEYSTORE_PASSWORD_ALIAS }}" --no-restore
+
+    # Шаг 6: Загружаем артефакты
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4
       with:
