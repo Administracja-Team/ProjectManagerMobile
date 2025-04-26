@@ -20,5 +20,8 @@ namespace ProjectManagerMobile.Models.DTO
 
         [JsonPropertyName("descriptive_role")]
         public string DescriptiveRole { get; set; }
+
+        public ImageSource Avatar { get; set; }
+        
     }
 }

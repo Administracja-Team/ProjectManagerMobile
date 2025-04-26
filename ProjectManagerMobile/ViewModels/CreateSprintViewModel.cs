@@ -35,10 +35,6 @@ namespace ProjectManagerMobile.ViewModels
             "fawfawfawwfwaf",
             "fawfawfawwfwaf",
             "fawfawfawwfwaf",
-            "fawfawfawwfwaf",
-            "fawfawfawwfwaf",
-            "fawfawfawwfwaf",
-            "fawfawfawwfwaf",
         };
 
         [RelayCommand]

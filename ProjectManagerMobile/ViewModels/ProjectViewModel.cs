@@ -20,6 +20,7 @@ namespace ProjectManagerMobile.ViewModels
     public partial class ProjectViewModel : BaseViewModel
     {
         private long _projectId;
+        private long _ownerId;
         private IProjectApi _projectApi;
         private TokenStorageService _tokenStorageService;
 
@@ -33,6 +34,9 @@ namespace ProjectManagerMobile.ViewModels
 
         [ObservableProperty]
         public partial string Owner { get; set; }
+
+        [ObservableProperty]
+        public partial ImageSource OwnerAvatar { get; set; }
 
         [ObservableProperty]
         public partial string TermOfWorks { get; set; }
@@ -70,7 +74,7 @@ namespace ProjectManagerMobile.ViewModels
         }
 
         [RelayCommand]
-        private async Task DeleteMemberFromProject()
+        private async Task DeleteMember()
         {
             try
             {
@@ -234,6 +238,7 @@ namespace ProjectManagerMobile.ViewModels
 
                 var token = await _tokenStorageService.GetBearerTokenAsync();
                 await LoadProjectData(token, projectId);
+                OwnerAvatar =  await LoadAvatar(token, _ownerId);
             }
             catch (Exception ex)
             {
@@ -242,6 +247,23 @@ namespace ProjectManagerMobile.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        private async Task<ImageSource> LoadAvatar(string? token, long memberId)
+        {
+            var response = await _projectApi.GetMemberAvatar(token, memberId);
+            if (response.IsSuccessStatusCode)
+            {
+                var imageBytes = await response.Content.ReadAsByteArrayAsync();
+                return ImageSource.FromStream(() => new MemoryStream(imageBytes));
+            }
+            else
+            {
+                var message = JsonSerializer.Deserialize<ErrorResponse>(response.Content.ToString()).Message;
+                await Toast.Make(message).Show();
+
+                return null;
             }
         }
 
@@ -260,9 +282,11 @@ namespace ProjectManagerMobile.ViewModels
                 foreach (var p in details.Others)
                 {
                     Members.Add(p);
+                    p.Avatar = await LoadAvatar(token, p.MemberId);
                     if (p.SystemRole == "OWNER")
                     {
                         Owner = $"{p.User.Name} {p.User.Surname}";
+                        _ownerId = p.MemberId;
                     }
                 }
 

@@ -52,5 +52,12 @@ namespace ProjectManagerMobile.Services.Interfaces
         Task<ApiResponse<string>> DeleteMemberFromProject(
             [Header("Authorization")] string accessToken,
             [AliasAs("member_id")] long memberId);
+
+
+        [Get("/project/member/{member_id}/avatar")]
+        Task<HttpResponseMessage> GetMemberAvatar(
+        [Header("Authorization")] string accessToken,
+        [AliasAs("member_id")] long memberId,
+        [Header("Accept")] string accept = "image/png");
     }
 }
