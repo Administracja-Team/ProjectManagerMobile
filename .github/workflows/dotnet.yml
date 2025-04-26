@@ -15,13 +15,13 @@ jobs:
     - name: Checkout project
       uses: actions/checkout@v3
 
-    # Шаг 2: Настройка .NET 9.0 SDK
-    - name: Set up .NET SDK
-      uses: actions/setup-dotnet@v3
+    # Шаг 2: Установка .NET MAUI (с помощью setup-maui-action)
+    - name: Set up .NET MAUI
+      uses: qaisjp/setup-maui-action@v1
       with:
         dotnet-version: '9.0.x'
 
-    # Шаг 3: Восстановление зависимостей проекта
+    # Шаг 3: Восстановление зависимостей
     - name: Restore dependencies
       run: dotnet restore
 
@@ -29,12 +29,19 @@ jobs:
     - name: Build project
       run: dotnet build --configuration Release
 
-    # Шаг 6: Создание артефактов сборки (например, для Android или iOS)
-    - name: Publish MAUI app
+
+    # Шаг 6: Публикация MAUI приложения для Android
+    - name: Publish MAUI app for Android
       run: dotnet publish -f:net9.0-android -c Release -o ./output/android
 
-    # Шаг 7: Загружаем артефакты (APK, или другие файлы)
-    - name: Upload APK
+    # Шаг 7: Проверка созданных файлов перед загрузкой
+    - name: List published files
+      run: |
+        echo "Published files:"
+        ls -R ./output/android
+
+    # Шаг 8: Загрузка артефактов (APK)
+    - name: Upload APK artifact
       uses: actions/upload-artifact@v3
       with:
         name: maui-app-apk
