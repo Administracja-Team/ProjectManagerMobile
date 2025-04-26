@@ -33,7 +33,7 @@ jobs:
         
     # Шаг 4: Восстановим зависимости
     - name: Restore dependencies
-      run: dotnet restore --source https://nuget.org --source https://nuget.devexpress.com/api/v3/index.json -u DevExpress -p ${{ secrets.DEVEXPRESS_NUGET_KEY }}
+      run: dotnet restore --source https://nuget.org --source "devexpress-nuget"
 
     # Шаг 5: Сборка проекта (без подписи)
     - name: Build
