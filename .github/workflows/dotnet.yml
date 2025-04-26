@@ -17,7 +17,7 @@ jobs:
 
     # Шаг 2: Установка .NET MAUI (с помощью setup-maui-action)
     - name: Set up .NET MAUI
-      uses: qaisjp/setup-maui-action@v1
+      uses: qaisjp/setup-maui-action@v1.1
       with:
         dotnet-version: '9.0.x'
 
