@@ -47,3 +47,10 @@ jobs:
         path: |
           ./**/*.aab
           ./**/*.apk
+
+    - name: Upload APK directly
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-release.apk
+        path: |
+          ./**/*.apk
