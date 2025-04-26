@@ -38,7 +38,7 @@ jobs:
     # Шаг 5: Сборка проекта (без подписи)
     - name: Build
       run: |
-        dotnet build MauiGithubActionsSample/MauiGithubActionsSample.csproj -c Release -f net9.0-android --no-restore
+        dotnet build ProjectManagerMobile/ProjectManagerMobile.csproj -c Release -f net9.0-android --no-restore
 
     # Шаг 6: Загружаем артефакты (APK или AAB файлы)
     - name: Upload a Build Artifact
