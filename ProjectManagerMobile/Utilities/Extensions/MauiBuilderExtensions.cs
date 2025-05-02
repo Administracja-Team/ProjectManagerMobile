@@ -33,6 +33,8 @@ namespace ProjectManagerMobile.Utilities.Extensions
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<RegisterViewModel>();
 
+            builder.Services.AddTransient<AppShellViewModel>();
+
             builder.Services.AddTransient<ProjectsListViewModel>();
             builder.Services.AddTransient<ProfileViewModel>();
             builder.Services.AddTransient<ProfileEditViewModel>();

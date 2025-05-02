@@ -7,10 +7,13 @@ namespace ProjectManagerMobile
 {
     public partial class App : Application
     {
-        public App()
+        private AppShellViewModel _appShelVM;
+        public App(AppShellViewModel appShelVM)
         {
             InitializeComponent();
             InitializeHandlers();
+
+            _appShelVM = appShelVM;
         }
 
 
@@ -74,7 +77,7 @@ namespace ProjectManagerMobile
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            return new Window(new AppShell(_appShelVM));
         }
     }
 }

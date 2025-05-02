@@ -29,7 +29,7 @@
                 Stroke="Transparent"
                 StrokeShape="RoundRectangle 100"
                 WidthRequest="150">
-                <Image Source="{Binding Avatar}" />
+                <Image Source="{Binding Avatar}" Aspect="AspectFill" />
             </Border>
 
             <Label

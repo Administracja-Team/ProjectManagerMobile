@@ -108,10 +108,4 @@
         </Grid>
     </DataTemplate>
 
-    <Grid ColumnDefinitions="Auto, *" x:Key="ShellFlyoutHeader">
-        <Image Source="dotnet_bot.png" WidthRequest="100" HeightRequest="120"/>
-
-        <Label Text="Piter Parker" Grid.Column="1" HorizontalOptions="Center"  VerticalOptions="Center" HorizontalTextAlignment="Center" FontSize="22" TextColor="{DynamicResource PrimaryColor}" FontFamily="OpenSansRegular"/>
-    </Grid>
-
 </ResourceDictionary>

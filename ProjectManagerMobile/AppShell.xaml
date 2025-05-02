@@ -7,7 +7,7 @@
     xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:utils="clr-namespace:ProjectManagerMobile.Utilities"
     xmlns:views="clr-namespace:ProjectManagerMobile.Views"
-    Title="ProjectManagerMobile" 
+    Title="ProjectManagerMobile"
     FlyoutBackgroundColor="{DynamicResource SecondaryBackgroundColor}"
     Shell.BackgroundColor="Black"
     Shell.FlyoutBehavior="Flyout"
@@ -16,7 +16,25 @@
     Shell.TitleColor="{DynamicResource OnPrimaryColor}">
 
     <Shell.FlyoutHeader>
-        <StaticResource Key="ShellFlyoutHeader" />
+        <Grid Padding="20, 100, 20, 0" ColumnDefinitions="Auto, *" ColumnSpacing="20">
+            <Border StrokeShape="RoundRectangle 50" Stroke="Transparent">
+                <Image Aspect="AspectFill"
+                HeightRequest="50"
+                Source="{Binding UserLogo}"
+                WidthRequest="50" />
+            </Border>
+
+
+            <Label
+                Grid.Column="1"
+                FontFamily="OpenSansRegular"
+                FontSize="20"
+                HorizontalOptions="Start"
+                HorizontalTextAlignment="Center"
+                Text="{Binding UserFullName}"
+                TextColor="{DynamicResource PrimaryColor}"
+                VerticalOptions="Center" />
+        </Grid>
     </Shell.FlyoutHeader>
 
     <ShellContent

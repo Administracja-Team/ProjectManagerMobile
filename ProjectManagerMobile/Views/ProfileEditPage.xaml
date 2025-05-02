@@ -31,7 +31,7 @@
                     StrokeShape="RoundRectangle 100"
                     VerticalOptions="Center"
                     WidthRequest="80">
-                    <Image Source="{Binding Avatar}" />
+                    <Image Source="{Binding Avatar}" Aspect="AspectFill" />
                 </Border>
 
                 <Button
