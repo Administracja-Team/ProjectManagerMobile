@@ -37,8 +37,16 @@ public static class MauiProgram
                 fonts.AddFont("SourceSans3-Bold.ttf", "SourceSansBold");
             });
 
+        Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping("MyCustomization", (handler, view) =>
+        {
+		#if ANDROID
+					handler.PlatformView.BackgroundTintList =
+		Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+		#endif
+        });
+
 #if DEBUG
-		builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
 		return builder.Build();

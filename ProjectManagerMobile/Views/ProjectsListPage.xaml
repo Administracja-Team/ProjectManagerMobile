@@ -1,65 +1,69 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="ProjectManagerMobile.Views.ProjectsListPage" Background="{DynamicResource SecondaryBackgroundColor}"
+    x:Class="ProjectManagerMobile.Views.ProjectsListPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"   x:Name="ProjectsPage"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:ProjectManagerMobile.Controls"
     xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
-    Title="Projects">
+    x:Name="ProjectsPage"
+    Title="Projects"
+    Background="{DynamicResource SecondaryBackgroundColor}">
 
     <Grid Padding="20">
         <CollectionView ItemsSource="{Binding ProjectsList}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border
-                Margin="0,5"
-                Padding="20"
-                BackgroundColor="{DynamicResource SecondaryColor}"
-                StrokeShape="RoundRectangle 20">
+                        Margin="0,5"
+                        Padding="20"
+                        BackgroundColor="{DynamicResource SecondaryColor}"
+                        StrokeShape="RoundRectangle 20">
 
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer
-                        Command="{Binding BindingContext.GoToProjectCommand, Source={x:Reference Name=ProjectsPage}}"
-                        CommandParameter="{Binding .}" />
+                            <TapGestureRecognizer Command="{Binding BindingContext.GoToProjectCommand, Source={x:Reference Name=ProjectsPage}}" CommandParameter="{Binding .}" />
                         </Border.GestureRecognizers>
 
                         <Grid
-                    ColumnDefinitions="Auto, *"
-                    ColumnSpacing="15"
-                    RowDefinitions="Auto, Auto, Auto"
-                    RowSpacing="5">
+                            ColumnDefinitions="Auto, *"
+                            ColumnSpacing="15"
+                            RowDefinitions="Auto, Auto, Auto"
+                            RowSpacing="5">
 
                             <Label
-                        Grid.ColumnSpan="2"
-                        FontFamily="SourceSansBold"
-                        FontSize="20"
-                        Text="{Binding NameWithOwner}"
-                        TextColor="{DynamicResource OnPrimaryColor}" />
+                                Grid.ColumnSpan="2"
+                                FontFamily="SourceSansBold"
+                                FontSize="20"
+                                Text="{Binding NameWithOwner}"
+                                TextColor="{DynamicResource OnPrimaryColor}" />
 
-                            <Border
-                        Grid.Row="1"
-                        Grid.RowSpan="2"
-                        BackgroundColor="Transparent"
-                        HeightRequest="60"
-                        Stroke="{DynamicResource OnPrimaryColor}"
-                        StrokeShape="RoundRectangle 100"
-                        StrokeThickness="1"
-                        WidthRequest="60" />
 
-                            <Label
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        FontFamily="SourceSansRegular"
-                        FontSize="18"
-                        Text="{Binding CurrentSprintName}"
-                        TextColor="{DynamicResource OnPrimaryColor}" />
+                            <GraphicsView Grid.Row="1" Grid.RowSpan="2" WidthRequest="60" HeightRequest="60">
+                                <GraphicsView.Drawable>
+                                    <controls:CircularProgressBarDrawable
+                                        Progress="50"
+                                        ProgressColor="White"
+                                        ProgressLeftColor="#1D5C57"
+                                        Size="60"
+                                        TextColor="White"
+                                        Thickness="2" />
+                                </GraphicsView.Drawable>
+                            </GraphicsView>
 
                             <Label
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        FontFamily="SourceSansRegular"
-                        FontSize="18"
-                        Text="{Binding CurrentSprintDeadLine}"
-                        TextColor="{DynamicResource OnPrimaryColor}" />
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                FontFamily="SourceSansRegular"
+                                FontSize="18"
+                                Text="{Binding CurrentSprintName}"
+                                TextColor="{DynamicResource OnPrimaryColor}" />
+
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                FontFamily="SourceSansRegular"
+                                FontSize="18"
+                                Text="{Binding CurrentSprintDeadLine}"
+                                TextColor="{DynamicResource OnPrimaryColor}" />
 
                         </Grid>
                     </Border>

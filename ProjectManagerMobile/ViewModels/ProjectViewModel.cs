@@ -3,6 +3,7 @@ using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ProjectManagerMobile.Models.DTO;
+using ProjectManagerMobile.Models.DTO.Sprint;
 using ProjectManagerMobile.Services;
 using ProjectManagerMobile.Services.Interfaces;
 using ProjectManagerMobile.Views;
@@ -22,21 +23,25 @@ namespace ProjectManagerMobile.ViewModels
         private long _projectId;
         private long _ownerId;
         private IProjectApi _projectApi;
+        private ISprintApi _sprintApi;
+        private INavigationDataService _dataService;
         private TokenStorageService _tokenStorageService;
 
         private long _currentMemberId;
         private string _currentMemberSystemRole;
-        public ProjectViewModel(IProjectApi projectApi, TokenStorageService tokenStorageService)
+        public ProjectViewModel(IProjectApi projectApi, TokenStorageService tokenStorageService, ISprintApi sprintApi, INavigationDataService dataService)
         {
             _projectApi = projectApi;
             _tokenStorageService = tokenStorageService;
+            _sprintApi = sprintApi;
+            _dataService = dataService;
         }
 
         [ObservableProperty]
         public partial string Owner { get; set; }
 
         [ObservableProperty]
-        public partial ImageSource OwnerAvatar { get; set; }
+        public partial ImageSource OwnerAvatar { get; set; } = "user.png";
 
         [ObservableProperty]
         public partial string TermOfWorks { get; set; }
@@ -55,10 +60,7 @@ namespace ProjectManagerMobile.ViewModels
 
         public ObservableCollection<OtherProjectMemberDto> Members { get; set; } = new ObservableCollection<OtherProjectMemberDto>();
 
-        public ObservableCollection<string> Sprints { get; set; } = new ObservableCollection<string>() 
-        {
-            "wafwaf",
-        };
+        public ObservableCollection<SprintDto> Sprints { get; set; } = new ObservableCollection<SprintDto>();
 
 
         [RelayCommand]
@@ -195,6 +197,7 @@ namespace ProjectManagerMobile.ViewModels
         [RelayCommand]
         private async Task GoToCreateSprint()
         {
+            _dataService.Set(Members);
             await Shell.Current.GoToAsync(nameof(CreateSprintPage));
         }
 
@@ -239,6 +242,7 @@ namespace ProjectManagerMobile.ViewModels
                 var token = await _tokenStorageService.GetBearerTokenAsync();
                 await LoadProjectData(token, projectId);
                 OwnerAvatar =  await LoadAvatar(token, _ownerId);
+                await LoadSprints(token, projectId);
             }
             catch (Exception ex)
             {
@@ -282,12 +286,34 @@ namespace ProjectManagerMobile.ViewModels
                 foreach (var p in details.Others)
                 {
                     Members.Add(p);
+                    p.Avatar = "user.png";
                     p.Avatar = await LoadAvatar(token, p.MemberId);
                     if (p.SystemRole == "OWNER")
                     {
                         Owner = $"{p.User.Name} {p.User.Surname}";
                         _ownerId = p.MemberId;
                     }
+                }
+
+            }
+            else
+            {
+                var message = JsonSerializer.Deserialize<ErrorResponse>(response.Error.Content).Message;
+                await Toast.Make(message).Show();
+            }
+        }
+
+        private async Task LoadSprints(string? token, long projectId)
+        {
+            var response = await _sprintApi.GetSprintsForProject(token, projectId);
+            if (response.IsSuccessful)
+            {
+                var sprints = response.Content;
+
+                Sprints.Clear();
+                foreach (var s in sprints)
+                {
+                    Sprints.Add(s);
                 }
 
             }

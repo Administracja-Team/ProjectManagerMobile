@@ -11,6 +11,8 @@ namespace ProjectManagerMobile.Utilities.Extensions
 {
     public static class MauiBuilderExtensions
     {
+
+        private const string SERVER_URL = "http://138.201.187.238:8888";
         public static MauiAppBuilder RegisterViews(this MauiAppBuilder builder)
         {
             builder.Services.AddTransient<AuthPage>();
@@ -51,21 +53,21 @@ namespace ProjectManagerMobile.Utilities.Extensions
         {
             builder.Services.AddSingleton<TokenStorageService>();
 
+            builder.Services.AddSingleton<INavigationDataService, NavigationDataService>();
+
             builder.Services
             .AddRefitClient<IAuthApi>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://138.201.187.238:8888"));
-
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(SERVER_URL));
             builder.Services
                 .AddRefitClient<IUserApi>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://138.201.187.238:8888"));
-
-
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(SERVER_URL));
             builder.Services
                 .AddRefitClient<IProjectApi>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://138.201.187.238:8888"));
-
-
-
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(SERVER_URL));
+            builder.Services
+                .AddRefitClient<ISprintApi>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(SERVER_URL));
+                
             return builder;
         }
     }

@@ -1,41 +1,154 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ProjectManagerMobile.Models.DTO;
+using ProjectManagerMobile.Models.DTO.Sprint;
+using System.Collections.ObjectModel;
 
-namespace ProjectManagerMobile.ViewModels
+namespace ProjectManagerMobile.ViewModels;
+
+public partial class CreateTaskViewModel : BaseViewModel
 {
-    public partial class CreateTaskViewModel : BaseViewModel
+    #region Fields
+
+    private readonly Action<SprintTaskDto> _onTaskSaved;
+
+    private const string TaskNameRequiredMessage = "Please enter the task name.";
+    private const string ImplementerRequiredMessage = "Please add at least one implementer.";
+
+    #endregion
+
+    #region Constructor
+
+    public CreateTaskViewModel(Action<SprintTaskDto> onTaskSaved)
     {
-        public CreateTaskViewModel()
+        _onTaskSaved = onTaskSaved;
+    }
+
+    #endregion
+
+    #region Properties
+
+    [ObservableProperty]
+    private string taskName;
+
+    [ObservableProperty]
+    private string taskDescription;
+
+    [ObservableProperty]
+    private Priority selectedPriority = Priority.Medium;
+
+    [ObservableProperty]
+    private DateTime startAt = DateTime.Now;
+
+    [ObservableProperty]
+    private DateTime endAt = DateTime.Now.AddDays(7);
+
+    [ObservableProperty]
+    private bool isBottomSheetOpened = false;
+
+    public ObservableCollection<OtherProjectMemberDto> Members { get; } = new();
+    public ObservableCollection<OtherProjectMemberDto> TaskImplementers { get; } = new();
+
+    #endregion
+
+    #region Commands
+
+    [RelayCommand]
+    private void SelectPriority(Priority priority) => SelectedPriority = priority;
+
+    [RelayCommand]
+    private Task ShowParticipants()
+    {
+        IsBottomSheetOpened = true;
+        return Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    private void AddMemberAsImplementer(OtherProjectMemberDto member)
+    {
+        if (!TaskImplementers.Contains(member))
         {
-            
+            TaskImplementers.Add(member);
         }
 
-        [ObservableProperty]
-        public partial string TaskName { get; set; }
+        IsBottomSheetOpened = false;
+    }
 
-
-        [ObservableProperty]
-        public partial string TaskDescription { get; set; }
-
-        [ObservableProperty]
-        public partial Priority SelectedPriority { get; set; } = Priority.Medium;
-
-        [RelayCommand]
-        private void SelectPriority(Priority priority)
+    [RelayCommand]
+    private void DeleteImplementer(OtherProjectMemberDto member)
+    {
+        if (TaskImplementers.Contains(member))
         {
-            SelectedPriority = priority;
+            TaskImplementers.Remove(member);
         }
     }
 
-    public enum Priority
+    [RelayCommand]
+    private async Task SaveTask()
     {
-        Low,
-        Medium,
-        High
+        if (!ValidateForm())
+            return;
+
+        var task = new SprintTaskDto
+        {
+            Name = TaskName,
+            Description = TaskDescription,
+            Priority = SelectedPriority.ToString().ToUpper(),
+            StartAt = StartAt,
+            EndAt = EndAt,
+            ImplementerMemberIds = TaskImplementers.Select(x => x.MemberId).ToList()
+        };
+
+        _onTaskSaved?.Invoke(task);
+
+        await Shell.Current.Navigation.PopAsync();
+
+        ResetForm();
     }
+
+    #endregion
+
+    #region Validation
+
+    private bool ValidateForm()
+    {
+        if (string.IsNullOrWhiteSpace(TaskName))
+        {
+            Toast.Make(TaskNameRequiredMessage).Show();
+            return false;
+        }
+
+        if (TaskImplementers.Count == 0)
+        {
+            Toast.Make(ImplementerRequiredMessage).Show();
+            return false;
+        }
+
+        return true;
+    }
+
+    #endregion
+
+    #region Helpers
+
+    private void ResetForm()
+    {
+        TaskName = string.Empty;
+        TaskDescription = string.Empty;
+        SelectedPriority = Priority.Medium;
+        StartAt = DateTime.Now;
+        EndAt = DateTime.Now.AddDays(7);
+        TaskImplementers.Clear();
+        IsBottomSheetOpened = false;
+    }
+
+    #endregion
+}
+
+public enum Priority
+{
+    Low,
+    Medium,
+    High
 }

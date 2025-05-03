@@ -22,7 +22,7 @@
 
             <Button
                 BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
-                Command="{Binding GoToConnectToProjectCommand}"
+                Command="{Binding GoToEditToProjectCommand}"
                 CornerRadius="20"
                 FontSize="22" FontFamily="SourceSansRegular"
                 HeightRequest="60" Clicked="Button_Clicked"
@@ -35,6 +35,15 @@
                 FontSize="22"
                 HeightRequest="60" Clicked="Button_Clicked"
                 Text="Add participants" FontFamily="SourceSansRegular"
+                TextColor="{DynamicResource SecondaryTextColor}" />
+
+            <Button
+                BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                Command="{Binding GoToCreateSprintCommand}"
+                CornerRadius="20"
+                FontSize="22"
+                HeightRequest="60" Clicked="Button_Clicked"
+                Text="Create new sprint" FontFamily="SourceSansRegular"
                 TextColor="{DynamicResource SecondaryTextColor}" />
 
         </VerticalStackLayout>

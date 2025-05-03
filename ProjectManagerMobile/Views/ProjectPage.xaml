@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="ProjectManagerMobile.Views.ProjectPage"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui" BackgroundColor="{DynamicResource SecondaryBackgroundColor}"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:androidBottomsheet="http://pluginmauibottomsheet.com/platformconfiguration/android"
     xmlns:bottomsheet="http://pluginmauibottomsheet.com"
+    xmlns:controls="clr-namespace:ProjectManagerMobile.Controls"
     xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:ProjectManagerMobile.Models.DTO"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:ProjectManagerMobile.ViewModels"
-    Title="{Binding ProjectName}">
+    Title="{Binding ProjectName}"
+    BackgroundColor="{DynamicResource SecondaryBackgroundColor}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding ShowMorePopupCommand}">
@@ -26,11 +28,12 @@
             ColumnDefinitions="Auto, *"
             ColumnSpacing="10"
             RowDefinitions="Auto, Auto, Auto, Auto, *">
-            <Border Stroke="Transparent" StrokeShape="RoundRectangle 50" HeightRequest="100" WidthRequest="100" >
-                <Image
-                Aspect="AspectFill"
-                Source="{Binding OwnerAvatar}"
-                />
+            <Border
+                HeightRequest="100"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 50"
+                WidthRequest="100">
+                <Image Aspect="AspectFill" Source="{Binding OwnerAvatar}" />
             </Border>
 
 
@@ -44,7 +47,7 @@
                     BackgroundColor="Transparent"
                     CornerRadius="28"
                     FontFamily="SourceSansBold"
-                    FontSize="16" 
+                    FontSize="16"
                     HorizontalOptions="Start"
                     Text="{Binding Owner, StringFormat='{0} (Owner)'}"
                     TextColor="{DynamicResource PrimaryTextColor}" />
@@ -117,21 +120,29 @@
                                     ColumnSpacing="15"
                                     RowSpacing="5">
 
-                                    <Border
+
+
+                                    <GraphicsView
                                         Grid.Row="1"
                                         Grid.RowSpan="2"
-                                        BackgroundColor="Transparent"
                                         HeightRequest="60"
-                                        Stroke="{DynamicResource OnPrimaryColor}"
-                                        StrokeShape="RoundRectangle 100"
-                                        StrokeThickness="1"
-                                        WidthRequest="60" />
+                                        WidthRequest="60">
+                                        <GraphicsView.Drawable>
+                                            <controls:CircularProgressBarDrawable
+                                                Progress="50"
+                                                ProgressColor="White"
+                                                ProgressLeftColor="#1D5C57"
+                                                Size="60"
+                                                TextColor="White"
+                                                Thickness="2" />
+                                        </GraphicsView.Drawable>
+                                    </GraphicsView>
 
                                     <Label
                                         Grid.Column="1"
                                         FontFamily="SourceSansRegular"
                                         FontSize="20"
-                                        Text="Sprint name"
+                                        Text="{Binding Name}"
                                         TextColor="{DynamicResource OnPrimaryColor}"
                                         VerticalOptions="Center" />
 
@@ -140,7 +151,7 @@
                                         Grid.Column="2"
                                         FontFamily="SourceSansRegular"
                                         FontSize="16"
-                                        Text="21.05"
+                                        Text="{Binding EndAtShort}"
                                         TextColor="{DynamicResource OnPrimaryColor}"
                                         VerticalOptions="Center" />
 
@@ -213,26 +224,6 @@
                 </CollectionView>
             </VerticalStackLayout>
 
-            <ImageButton
-                x:Name="FloatingButton"
-                Grid.Row="4"
-                Grid.ColumnSpan="2"
-                Aspect="AspectFill"
-                BackgroundColor="{DynamicResource PrimaryColor}"
-                Command="{Binding GoToCreateSprintCommand}"
-                CornerRadius="50"
-                HeightRequest="65"
-                HorizontalOptions="End"
-                VerticalOptions="End"
-                WidthRequest="65">
-                <ImageButton.Source>
-                    <ic:FluentImageSource
-                        Icon="Add"
-                        IconVariant="Filled"
-                        Color="{DynamicResource OnPrimaryColor}" />
-                </ImageButton.Source>
-            </ImageButton>
-
             <bottomsheet:BottomSheet
                 x:Name="ModalBottomSheet"
                 Padding="20"
@@ -269,12 +260,17 @@
                                                     <Grid.GestureRecognizers>
                                                         <TapGestureRecognizer Command="{Binding BindingContext.ShowMemberActionsPopupCommand, Source={RelativeSource AncestorType={x:Type bottomsheet:BottomSheet}}}" CommandParameter="{Binding .}" />
                                                     </Grid.GestureRecognizers>
-       
 
-                                                    <Border Grid.RowSpan="2" Stroke="Transparent" StrokeShape="RoundRectangle 50" WidthRequest="50" HeightRequest="50">
+
+                                                    <Border
+                                                        Grid.RowSpan="2"
+                                                        HeightRequest="50"
+                                                        Stroke="Transparent"
+                                                        StrokeShape="RoundRectangle 50"
+                                                        WidthRequest="50">
                                                         <Image Aspect="AspectFill" Source="{Binding Avatar}" />
                                                     </Border>
-                                                   
+
                                                     <!--  Текст  -->
                                                     <HorizontalStackLayout Grid.Column="1" Spacing="10">
                                                         <Label
@@ -285,7 +281,10 @@
                                                             TextColor="{DynamicResource PrimaryTextColor}"
                                                             VerticalOptions="Center" />
 
-                                                        <Border Stroke="{DynamicResource SecondaryColor}" Padding="5,0" StrokeShape="RoundRectangle 20">
+                                                        <Border
+                                                            Padding="5,0"
+                                                            Stroke="{DynamicResource SecondaryColor}"
+                                                            StrokeShape="RoundRectangle 20">
                                                             <Label
                                                                 FontFamily="SourceSansRegular"
                                                                 FontSize="12"
@@ -319,7 +318,7 @@
                                                             VerticalOptions="Center" />
 
 
-            
+
                                                     </HorizontalStackLayout>
 
                                                 </Grid>

@@ -23,6 +23,18 @@ namespace ProjectManagerMobile.Utilities.Converters
                     _ => Colors.Transparent
                 };
             }
+            else if (value is string priorityStr)
+            {
+                switch (priorityStr.ToUpperInvariant())
+                {
+                    case "LOW":
+                        return Color.FromArgb("#55FF55");
+                    case "MEDIUM":
+                        return Color.FromArgb("#FFFF55");
+                    case "HIGH":
+                        return Color.FromArgb("#FF5555");
+                }
+            }
             return Colors.Transparent;
         }
 
