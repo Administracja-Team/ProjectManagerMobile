@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectManagerMobile.Utilities.Converters.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,11 @@ namespace ProjectManagerMobile.Models.DTO.Sprint
         public List<long> ImplementerMemberIds { get; set; }
 
         [JsonPropertyName("start_at")]
+        [JsonConverter(typeof(DateTimeWithoutOffsetConverter))]
         public DateTime StartAt { get; set; }
 
         [JsonPropertyName("end_at")]
+        [JsonConverter(typeof(DateTimeWithoutOffsetConverter))]
         public DateTime EndAt { get; set; }
 
         [JsonIgnore]

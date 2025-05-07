@@ -40,7 +40,7 @@
                             <GraphicsView Grid.Row="1" Grid.RowSpan="2" WidthRequest="60" HeightRequest="60">
                                 <GraphicsView.Drawable>
                                     <controls:CircularProgressBarDrawable
-                                        Progress="50"
+                                        Progress="{Binding DonePercents}"
                                         ProgressColor="White"
                                         ProgressLeftColor="#1D5C57"
                                         Size="60"

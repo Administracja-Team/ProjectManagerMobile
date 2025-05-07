@@ -85,10 +85,9 @@ namespace ProjectManagerMobile.ViewModels
                 };
 
                 var response = await _sprintApi.CreateSprint(token, ProjectId, sprintCreateReq);
-
                 if (response.IsSuccessful)
                 {
-                    await Toast.Make("Sprint created!").Show();
+                    await Toast.Make("Sprint successfully created!").Show();
                     await Shell.Current.Navigation.PopAsync();
                 }
                 else

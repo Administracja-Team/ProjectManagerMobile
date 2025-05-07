@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectManagerMobile.Utilities.Converters.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,11 @@ namespace ProjectManagerMobile.Models.DTO.Sprint
         public List<SprintTaskDto> Tasks { get; set; }
 
         [JsonPropertyName("start_at")]
-        public DateTime StartAt { get; set; }
+        [JsonConverter(typeof(DateTimeWithoutOffsetConverter))]
+        public DateTime? StartAt { get; set; }
 
         [JsonPropertyName("end_at")]
-        public DateTime EndAt { get; set; }
+        [JsonConverter(typeof(DateTimeWithoutOffsetConverter))]
+        public DateTime? EndAt { get; set; }
     }
 }

@@ -52,7 +52,6 @@ namespace ProjectManagerMobile.Utilities.Extensions
         public static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
         {
             builder.Services.AddSingleton<TokenStorageService>();
-
             builder.Services.AddSingleton<INavigationDataService, NavigationDataService>();
 
             builder.Services

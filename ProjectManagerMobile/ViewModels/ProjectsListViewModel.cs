@@ -80,8 +80,9 @@ namespace ProjectManagerMobile.ViewModels
                         Id = p.Project.Id,
                         Name = p.Project.Name,
                         OwnerName = p.OwnerName,
-                        CurrentSprintName = "Test Sprint",
-                        CurrentSprintDeadLine = DateTime.Now
+                        CurrentSprintName = "Sprint",
+                        CurrentSprintDeadLine = DateTime.Now,
+                        DonePercents = (int)(p.Project.DonePercents)
                     };
 
                     ProjectsList.Add(project);

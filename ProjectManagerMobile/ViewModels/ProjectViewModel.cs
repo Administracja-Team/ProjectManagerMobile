@@ -198,7 +198,7 @@ namespace ProjectManagerMobile.ViewModels
         private async Task GoToCreateSprint()
         {
             _dataService.Set(Members);
-            await Shell.Current.GoToAsync(nameof(CreateSprintPage));
+            await Shell.Current.GoToAsync($"{nameof(CreateSprintPage)}?projectId={_projectId}");
         }
 
         [RelayCommand]

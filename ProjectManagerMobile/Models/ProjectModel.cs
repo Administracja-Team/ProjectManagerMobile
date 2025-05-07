@@ -20,6 +20,8 @@ namespace ProjectManagerMobile.Models
 
         public DateTime CurrentSprintDeadLine { get; set; }
 
+        public int DonePercents { get; set; }
+
         public ProjectModel()
         {
             
