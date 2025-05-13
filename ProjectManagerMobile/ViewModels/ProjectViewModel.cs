@@ -282,6 +282,7 @@ namespace ProjectManagerMobile.ViewModels
                 _projectId = details.Project.Id;
                 ProjectName = details.Project.Name;
                 ProjectDescription = details.Project.Description ?? "No info";
+                TermOfWorks = $"{(details.Project.CreatedAt ?? DateTime.Today).ToString("dd.MM.yyyy")} - {DateTime.Today.ToString("dd.MM.yyyy")}";
 
                 Members.Clear();
                 foreach (var p in details.Others)
