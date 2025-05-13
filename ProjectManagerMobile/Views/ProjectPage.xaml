@@ -6,10 +6,11 @@
     xmlns:androidBottomsheet="http://pluginmauibottomsheet.com/platformconfiguration/android"
     xmlns:bottomsheet="http://pluginmauibottomsheet.com"
     xmlns:controls="clr-namespace:ProjectManagerMobile.Controls"
-    xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui" x:Name="ProjectContentPage"
+    xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:ProjectManagerMobile.Models.DTO"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:ProjectManagerMobile.ViewModels"
+    x:Name="ProjectContentPage"
     Title="{Binding ProjectName}"
     BackgroundColor="{DynamicResource SecondaryBackgroundColor}">
 
@@ -92,66 +93,66 @@
                     TextColor="{DynamicResource SecondaryTextColor}" />
             </VerticalStackLayout>
             <VerticalStackLayout
-    Grid.Row="2"
-    Grid.ColumnSpan="2"
-    Margin="0,20,0,0">
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="0,20,0,0">
                 <Label
-        FontFamily="SourceSansBold"
-        FontSize="16"
-        Text="Current sprints"
-        TextColor="{DynamicResource PrimaryTextColor}" />
+                    FontFamily="SourceSansBold"
+                    FontSize="16"
+                    Text="Current sprints"
+                    TextColor="{DynamicResource PrimaryTextColor}" />
 
                 <CollectionView x:Name="SprintsCollectionView" ItemsSource="{Binding Sprints}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border
-                    Margin="0,5"
-                    Padding="20"
-                    BackgroundColor="{DynamicResource SecondaryColor}"
-                    StrokeShape="RoundRectangle 20">
+                                Margin="0,5"
+                                Padding="20"
+                                BackgroundColor="{DynamicResource SecondaryColor}"
+                                StrokeShape="RoundRectangle 20">
 
                                 <Border.GestureRecognizers>
-                                    <TapGestureRecognizer
-                            Command="{Binding BindingContext.GoToSprintDetailsCommand, Source={x:Reference Name=ProjectContentPage}}"
-                            CommandParameter="{Binding .}" />
+                                    <TapGestureRecognizer Command="{Binding BindingContext.GoToSprintDetailsCommand, Source={x:Reference Name=ProjectContentPage}}" CommandParameter="{Binding .}" />
                                 </Border.GestureRecognizers>
 
                                 <Grid
-                        ColumnDefinitions="Auto, *, Auto"
-                        ColumnSpacing="15"
-                        RowSpacing="5">
+                                    ColumnDefinitions="Auto, *, Auto"
+                                    ColumnSpacing="15"
+                                    RowSpacing="5">
 
                                     <GraphicsView
-                            Grid.Row="1"
-                            Grid.RowSpan="2"
-                            HeightRequest="60"
-                            WidthRequest="60">
+                                        Grid.Row="1"
+                                        Grid.RowSpan="2"
+                                        HeightRequest="60"
+                                        WidthRequest="60">
                                         <GraphicsView.Drawable>
                                             <controls:CircularProgressBarDrawable
-                                    Progress="{Binding DonePercents}"
-                                    ProgressColor="White"
-                                    ProgressLeftColor="#1D5C57"
-                                    Size="60"
-                                    TextColor="White"
-                                    Thickness="2" />
+                                                Progress="{Binding DonePercents}"
+                                                ProgressColor="White"
+                                                ProgressLeftColor="#1D5C57"
+                                                Size="60"
+                                                TextColor="White"
+                                                Thickness="2" />
                                         </GraphicsView.Drawable>
                                     </GraphicsView>
 
-                                    <Label
-                            Grid.Column="1"
-                            FontFamily="SourceSansRegular"
-                            FontSize="20"
-                            Text="{Binding Name}"
-                            TextColor="{DynamicResource OnPrimaryColor}"
-                            VerticalOptions="Center" />
+                                    <Label Text="{Binding DonePercentsString}" BackgroundColor="{DynamicResource SecondaryColor}" FontSize="16" TextColor="{DynamicResource OnPrimaryColor}" Padding="0, 5" HorizontalOptions="Center" VerticalOptions="Center"/> 
 
                                     <Label
-                            Grid.Column="2"
-                            FontFamily="SourceSansRegular"
-                            FontSize="16"
-                            Text="{Binding EndAtShort}"
-                            TextColor="{DynamicResource OnPrimaryColor}"
-                            VerticalOptions="Center" />
+                                        Grid.Column="1"
+                                        FontFamily="SourceSansRegular"
+                                        FontSize="20"
+                                        Text="{Binding Name}"
+                                        TextColor="{DynamicResource OnPrimaryColor}"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Grid.Column="2"
+                                        FontFamily="SourceSansRegular"
+                                        FontSize="16"
+                                        Text="{Binding EndAtShort}"
+                                        TextColor="{DynamicResource OnPrimaryColor}"
+                                        VerticalOptions="Center" />
 
                                 </Grid>
                             </Border>
@@ -180,9 +181,11 @@
                                 BackgroundColor="#4D6E6E"
                                 StrokeShape="RoundRectangle 20">
 
-                                --><!--<Border.GestureRecognizers>
+                -->
+                <!--<Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding BindingContext.GoToProjectCommand, Source={x:Reference Name=ProjectPage}}" CommandParameter="{Binding .}" />
-                                </Border.GestureRecognizers>--><!--
+                                </Border.GestureRecognizers>-->
+                <!--
 
                                 <Grid
                                     ColumnDefinitions="Auto, *, Auto"
