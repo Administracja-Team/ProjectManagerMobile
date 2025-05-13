@@ -5,15 +5,14 @@ namespace ProjectManagerMobile.Views;
 [QueryProperty(nameof(ProjectIdQuery), "projectId")]
 public partial class CreateSprintPage : ContentPage
 {
-    public int ProjectId { get; set; }
+    private CreateSprintViewModel _createSprintVM;
 
     public string ProjectIdQuery
     {
-        get => ProjectId.ToString();
         set
         {
             if (int.TryParse(value, out var id))
-                ProjectId = id;
+                _createSprintVM.ProjectId = id;
         }
     }
 
@@ -22,6 +21,6 @@ public partial class CreateSprintPage : ContentPage
         InitializeComponent();
 
         BindingContext = createSprintVM;
-        createSprintVM.ProjectId = ProjectId;
+        _createSprintVM = createSprintVM;
     }
 }

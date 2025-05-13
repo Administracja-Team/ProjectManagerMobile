@@ -33,5 +33,13 @@ namespace ProjectManagerMobile.Services.Interfaces
             [Header("Authorization")] string accessToken,
             [AliasAs("project_id")] long projectId,
             [AliasAs("sprint_id")] long sprintId);
+
+        [Patch("/project/{project_id}/sprint/{sprint_id}/{task_id}")]
+        Task<ApiResponse<string>> UpdateTaskStatus(
+             [Header("Authorization")] string accessToken,
+             [AliasAs("project_id")] long projectId,
+             [AliasAs("sprint_id")] long sprintId,
+             [AliasAs("task_id")] long taskId,
+             [Body] TaskStatusUpdateRequest request);
     }
 }

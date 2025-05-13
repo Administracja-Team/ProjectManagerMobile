@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProjectManagerMobile.Views.TaskPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:androidBottomsheet="http://pluginmauibottomsheet.com/platformconfiguration/android"
+    xmlns:bottomsheet="http://pluginmauibottomsheet.com"
+    xmlns:converters="clr-namespace:ProjectManagerMobile.Utilities.Converters"
+    xmlns:dx="http://schemas.devexpress.com/maui"
+    xmlns:ic="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:local="clr-namespace:ProjectManagerMobile.Models.DTO"
+    xmlns:vm="clr-namespace:ProjectManagerMobile.ViewModels"
+    Title="Task"
+    BackgroundColor="{DynamicResource SecondaryBackgroundColor}">
+
+    <ContentPage.Resources>
+        <converters:PriorityToColorConverter x:Key="PriorityToColorConverter" />
+        <converters:IsPrioritySelectedConverter x:Key="IsPrioritySelectedConverter" />
+        <converters:IsStatusSelectedConverter x:Key="IsStatusSelectedConverter" />
+        <converters:StatusToColorConverter x:Key="StatusToColorConverter" />
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding SaveTaskStatusCommand}">
+            <ToolbarItem.IconImageSource>
+                <ic:FluentImageSource Icon="Save" IconVariant="Filled" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <VerticalStackLayout Padding="20">
+        <Label
+            Margin="0,0,0,0"
+            FontFamily="SourceSansBold"
+            FontSize="18"
+            Text="Name"
+            TextColor="{DynamicResource PrimaryTextColor}" />
+
+        <Entry
+            FontFamily="SourceSansRegular"
+            FontSize="20" IsEnabled="False"
+            Text="{Binding TaskName}"
+            TextColor="{DynamicResource SecondaryTextColor}" />
+
+
+        <Label
+            Margin="0,20,0,0"
+            FontFamily="SourceSansBold"
+            FontSize="18"
+            Text="Description"
+            TextColor="{DynamicResource PrimaryTextColor}" />
+
+
+        <Editor
+            AutoSize="TextChanges"
+            FontFamily="SourceSansRegular"  IsEnabled="False"
+            FontSize="20"
+            Text="{Binding TaskDescription}"
+            TextColor="{DynamicResource SecondaryTextColor}" />
+
+        <Label
+            Margin="0,20,0,0"
+            FontFamily="SourceSansBold"
+            FontSize="18"
+            Text="Priority"
+            TextColor="{DynamicResource PrimaryTextColor}" />
+
+        <Grid
+            Padding="10"
+            ColumnDefinitions="*, *, *"
+            ColumnSpacing="0">
+            <!--  Low Button  -->
+            <Border Opacity="0.9"
+                Grid.Column="0"
+                BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 10 0 10 0"
+                StrokeThickness="2">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding SelectedPriority, Converter={StaticResource IsPrioritySelectedConverter}, ConverterParameter=Low}"
+                                TargetType="Border"
+                                Value="True">
+                                <Setter Property="BackgroundColor" Value="{Binding Source={x:Static vm:Priority.Low}, Converter={StaticResource PriorityToColorConverter}}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Label
+                    Padding="10"
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Text="Low"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectPriorityCommand}" CommandParameter="{x:Static vm:Priority.Low}" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!--  Medium Button  -->
+            <Border
+                Grid.Column="1"
+                BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                Stroke="Transparent" Opacity="0.9"
+                StrokeShape="RoundRectangle 0 0 0 0"
+                StrokeThickness="2">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding SelectedPriority, Converter={StaticResource IsPrioritySelectedConverter}, ConverterParameter=Medium}"
+                                TargetType="Border"
+                                Value="True">
+                                <Setter Property="BackgroundColor" Value="{Binding Source={x:Static vm:Priority.Medium}, Converter={StaticResource PriorityToColorConverter}}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Label
+                    Padding="10"
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Text="Medium"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectPriorityCommand}" CommandParameter="{x:Static vm:Priority.Medium}" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!--  High Button  -->
+            <Border
+                Grid.Column="2" Opacity="0.9"
+                BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 0 10 0 10"
+                StrokeThickness="2">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding SelectedPriority, Converter={StaticResource IsPrioritySelectedConverter}, ConverterParameter=High}"
+                                TargetType="Border"
+                                Value="True">
+                                <Setter Property="BackgroundColor" Value="{Binding Source={x:Static vm:Priority.High}, Converter={StaticResource PriorityToColorConverter}}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Label
+                    Padding="10"
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Text="High"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectPriorityCommand}" CommandParameter="{x:Static vm:Priority.High}" />
+                </Border.GestureRecognizers>
+            </Border>
+        </Grid>
+
+
+        <Label
+    Margin="0,20,0,0"
+    FontFamily="SourceSansBold"
+    FontSize="18"
+    Text="Status"
+    TextColor="{DynamicResource PrimaryTextColor}" />
+
+        <Grid
+    Padding="10"
+    ColumnDefinitions="*, *, *"
+    ColumnSpacing="0">
+            <!-- TODO Button -->
+            <Border Opacity="0.9"
+            Grid.Column="0"
+            BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+            Stroke="Transparent"
+            StrokeShape="RoundRectangle 10 0 10 0"
+            StrokeThickness="2">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                        <Style.Triggers>
+                            <DataTrigger
+                        Binding="{Binding SelectedStatus, Converter={StaticResource IsStatusSelectedConverter}, ConverterParameter=TODO}"
+                        TargetType="Border"
+                        Value="True">
+                                <Setter Property="BackgroundColor" Value="{Binding Source={x:Static vm:TaskStatus.TODO}, Converter={StaticResource StatusToColorConverter}}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Label
+            Padding="10"
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="To Do"
+            TextColor="Black"
+            VerticalOptions="Center" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectStatusCommand}" CommandParameter="{x:Static vm:TaskStatus.TODO}" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- IN_PROGRESS Button -->
+            <Border
+        Grid.Column="1"
+        BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+        Stroke="Transparent" Opacity="0.9"
+        StrokeShape="RoundRectangle 0 0 0 0"
+        StrokeThickness="2">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                        <Style.Triggers>
+                            <DataTrigger
+                        Binding="{Binding SelectedStatus, Converter={StaticResource IsStatusSelectedConverter}, ConverterParameter=IN_PROGRESS}"
+                        TargetType="Border"
+                        Value="True">
+                                <Setter Property="BackgroundColor" Value="{Binding Source={x:Static vm:TaskStatus.IN_PROGRESS}, Converter={StaticResource StatusToColorConverter}}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Label
+            Padding="10"
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="In Progress"
+            TextColor="Black"
+            VerticalOptions="Center" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectStatusCommand}" CommandParameter="{x:Static vm:TaskStatus.IN_PROGRESS}" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- DONE Button -->
+            <Border
+        Grid.Column="2" Opacity="0.9"
+        BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+        Stroke="Transparent"
+        StrokeShape="RoundRectangle 0 10 0 10"
+        StrokeThickness="2">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                        <Style.Triggers>
+                            <DataTrigger
+                        Binding="{Binding SelectedStatus, Converter={StaticResource IsStatusSelectedConverter}, ConverterParameter=DONE}"
+                        TargetType="Border"
+                        Value="True">
+                                <Setter Property="BackgroundColor" Value="{Binding Source={x:Static vm:TaskStatus.DONE}, Converter={StaticResource StatusToColorConverter}}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Label
+            Padding="10"
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="Done"
+            TextColor="Black"
+            VerticalOptions="Center" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectStatusCommand}" CommandParameter="{x:Static vm:TaskStatus.DONE}" />
+                </Border.GestureRecognizers>
+            </Border>
+        </Grid>
+        
+        <HorizontalStackLayout Margin="0,20,0,0" Spacing="10">
+            <Label
+                FontFamily="SourceSansBold"
+                FontSize="18"
+                Text="Implementers"
+                TextColor="{DynamicResource PrimaryTextColor}"
+                VerticalOptions="Center" />
+        </HorizontalStackLayout>
+
+        <dx:DXCollectionView
+            Grid.Row="1"
+            IsPullToRefreshEnabled="False"
+            ItemsSource="{Binding TaskImplementers}"
+            SelectionMode="None"
+            >
+
+            <dx:DXCollectionView.ItemTemplate>
+                <DataTemplate x:DataType="local:OtherProjectMemberDto">
+                    <dx:SwipeContainer FullSwipeMode="Both">
+                        <dx:SwipeContainer.ItemView>
+
+                            <Border Stroke="Transparent" StrokeShape="RoundRectangle 25">
+                                <Grid
+                                    Padding="10"
+                                    ColumnDefinitions="Auto, *"
+                                    ColumnSpacing="10"
+                                    RowDefinitions="Auto, Auto">
+
+                                    <!--  Аватар  -->
+                                    <Border
+                                        Grid.RowSpan="2"
+                                        HeightRequest="50"
+                                        Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 50"
+                                        WidthRequest="50">
+                                        <Image Aspect="AspectFill" Source="{Binding Avatar}" />
+                                    </Border>
+
+                                    <!--  Имя пользователя  -->
+                                    <HorizontalStackLayout Grid.Column="1" Spacing="10">
+                                        <Label
+                                            FontFamily="SourceSansBold"
+                                            FontSize="18"
+                                            HorizontalOptions="StartAndExpand"
+                                            Text="{Binding User.FullName}"
+                                            TextColor="{DynamicResource PrimaryTextColor}"
+                                            VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+
+                                    <!--  Логин и роль  -->
+                                    <HorizontalStackLayout
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Spacing="10">
+                                        <Label
+                                            FontFamily="SourceSansRegular"
+                                            FontSize="16"
+                                            HorizontalOptions="StartAndExpand"
+                                            Text="{Binding User.Username}"
+                                            TextColor="{DynamicResource SecondaryTextColor}"
+                                            VerticalOptions="Center" />
+
+                                        <Label
+                                            FontFamily="SourceSansBold"
+                                            FontSize="16"
+                                            HorizontalOptions="StartAndExpand"
+                                            Text="{Binding DescriptiveRole, StringFormat='[{0}]'}"
+                                            TextColor="{DynamicResource PrimaryTextColor}"
+                                            VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </Border>
+
+                        </dx:SwipeContainer.ItemView>
+
+                       
+                    </dx:SwipeContainer>
+                </DataTemplate>
+            </dx:DXCollectionView.ItemTemplate>
+        </dx:DXCollectionView>
+
+
+
+
+
+    </VerticalStackLayout>
+
+
+</ContentPage>

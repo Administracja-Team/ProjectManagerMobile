@@ -70,9 +70,10 @@ namespace ProjectManagerMobile.ViewModels
         }
 
         [RelayCommand]
-        private async Task CreateSprint()
+        private async Task GoToSprintDetails(SprintDto sprint)
         {
-
+            _dataService.Set(Members);
+            await Shell.Current.GoToAsync($"{nameof(SprintDetailsPage)}?projectId={_projectId}&sprintId={sprint.Id}");
         }
 
         [RelayCommand]

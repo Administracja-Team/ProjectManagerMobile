@@ -28,6 +28,9 @@ namespace ProjectManagerMobile.Models.DTO.Sprint
         [JsonPropertyName("end_time")]
         public DateTime EndAt { get; set; }
 
+        [JsonPropertyName("done_percents")]
+        public double DonePercents { get; set; }
+
         [JsonIgnore]
         public string EndAtShort => EndAt.ToString("dd.MM");
     }

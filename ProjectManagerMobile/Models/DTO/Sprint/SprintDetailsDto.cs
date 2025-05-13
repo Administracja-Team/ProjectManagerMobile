@@ -14,7 +14,7 @@ namespace ProjectManagerMobile.Models.DTO.Sprint
         public string Name { get; set; }
         public string? Description { get; set; }
 
-        public List<SprintTaskDto> Tasks { get; set; }
+        public List<SprintTaskItemDto> Tasks { get; set; }
 
         [JsonPropertyName("start_at")]
         public DateTime StartAt { get; set; }

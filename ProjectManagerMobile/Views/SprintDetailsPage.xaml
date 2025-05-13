@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProjectManagerMobile.Views.SprintDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dx="http://schemas.devexpress.com/maui"
+    Title="Sprint Details" x:Name="SprintDetailsContentPage"
+    xmlns:converters="clr-namespace:ProjectManagerMobile.Utilities.Converters"
+    BackgroundColor="{DynamicResource SecondaryBackgroundColor}">
+    <ContentPage.Resources>
+        <converters:PriorityToColorConverter x:Key="PriorityToColorConverter" />
+        <converters:StatusWithMyConverter x:Key="StatusWithMyConverter" />
+    </ContentPage.Resources>
+    <Grid Padding="20,0,20,20">
+        <ScrollView>
+            <VerticalStackLayout>
+                <Label
+                    FontFamily="SourceSansBold"
+                    FontSize="18" Margin="0,20,0,0"
+                    Text="Name"
+                    TextColor="{DynamicResource PrimaryTextColor}" />
+                <Label
+                    FontFamily="SourceSansRegular"
+                    FontSize="16"
+                    Text="{Binding SprintDetails.Name}"
+                    TextColor="{DynamicResource SecondaryTextColor}" />
+                <Label
+                    Margin="0,20,0,0"
+                    FontFamily="SourceSansBold"
+                    FontSize="18"
+                    Text="Description"
+                    TextColor="{DynamicResource PrimaryTextColor}" />
+                <Label
+                    FontFamily="SourceSansRegular"
+                    FontSize="16"
+                    Text="{Binding SprintDetails.Description}"
+                    TextColor="{DynamicResource SecondaryTextColor}" />
+                <Label
+                    Margin="0,20,0,0"
+                    FontFamily="SourceSansBold"
+                    FontSize="18"
+                    Text="Work Period"
+                    TextColor="{DynamicResource PrimaryTextColor}" />
+                <HorizontalStackLayout Margin="5" HorizontalOptions="Center">
+                    <Border
+                        Padding="25,0"
+                        BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                        StrokeShape="RoundRectangle 12">
+                        <DatePicker
+                            Date="{Binding SprintDetails.StartAt}"
+                            FontFamily="SourceSansRegular"
+                            Format="dd/MM/yyyy"
+                            MaximumDate="12/31/2030"
+                            MinimumDate="01/01/2020"
+                            VerticalOptions="Center" />
+                    </Border>
+                    <Border
+                        BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                        HeightRequest="10"
+                        WidthRequest="40" />
+                    <Border
+                        Padding="25,0"
+                        BackgroundColor="{DynamicResource PrimaryBackgroundColor}"
+                        StrokeShape="RoundRectangle 12">
+                        <DatePicker
+                            Date="{Binding SprintDetails.EndAt}"
+                            FontFamily="SourceSansRegular"
+                            Format="dd/MM/yyyy"
+                            MaximumDate="12/31/2030"
+                            MinimumDate="01/01/2020"
+                            VerticalOptions="Center" />
+                    </Border>
+                </HorizontalStackLayout>
+                <Label
+                    Margin="0,20,0,0"
+                    FontFamily="SourceSansBold"
+                    FontSize="18"
+                    Text="Tasks"
+                    TextColor="{DynamicResource PrimaryTextColor}" />
+                <dx:DXCollectionView
+                    ItemsSource="{Binding SprintDetails.Tasks}"
+                    SelectionMode="None">
+                    <dx:DXCollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <dx:SwipeContainer FullSwipeMode="Both">
+                                <dx:SwipeContainer.ItemView>
+                                    <Border
+                                        Margin="5"
+                                        Padding="0"
+                                        BackgroundColor="Transparent"
+                                        StrokeShape="RoundRectangle 10"
+                                        StrokeThickness="0">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding BindingContext.GoToTaskCommand, Source={x:Reference Name=SprintDetailsContentPage}}"
+                                                CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
+                                        <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, *" Padding="0" RowSpacing="5" ColumnSpacing="0">
+                                            <!-- Название задачи -->
+                                            <Border
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                BackgroundColor="{DynamicResource PrimaryColor}"
+                                                Stroke="Transparent"
+                                                StrokeShape="RoundRectangle 10 0 10 0">
+                                                <Label
+                                                    Padding="10"
+                                                    FontSize="16"
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding Name}"
+                                                    TextColor="White"
+                                                    VerticalOptions="Center" />
+                                            </Border>
+                                            <!-- Приоритет -->
+                                            <Border
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                BackgroundColor="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}"
+                                                Stroke="Transparent"
+                                                StrokeShape="RoundRectangle 0 10 0 10">
+                                                <Label
+                                                    Padding="10"
+                                                    FontSize="16"
+                                                    HorizontalOptions="Center"
+       
+                                                    TextColor="{DynamicResource SecondaryTextColor}"
+                                                    VerticalOptions="Center">
+                                                    <Label.Text>
+                                                        <MultiBinding Converter="{StaticResource StatusWithMyConverter}">
+                                                            <Binding Path="Status" />
+                                                            <Binding Path="IsMine" />
+                                                        </MultiBinding>
+                                                    </Label.Text>
+                                                </Label>
+                                            </Border>
+                                            <!-- Статус с учетом IsMine -->
+                                            
+                                        </Grid>
+                                    </Border>
+                                </dx:SwipeContainer.ItemView>
+                            </dx:SwipeContainer>
+                        </DataTemplate>
+                    </dx:DXCollectionView.ItemTemplate>
+                </dx:DXCollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

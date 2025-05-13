@@ -25,6 +25,8 @@ namespace ProjectManagerMobile.Utilities.Extensions
             builder.Services.AddTransient<ProjectPage>();
             builder.Services.AddTransient<CreateSprintPage>();
             builder.Services.AddTransient<CreateTaskPage>();
+            builder.Services.AddTransient<SprintDetailsPage>();
+            builder.Services.AddTransient<TaskPage>();
 
 
 
@@ -45,6 +47,9 @@ namespace ProjectManagerMobile.Utilities.Extensions
             builder.Services.AddTransient<ProjectViewModel>();
             builder.Services.AddTransient<CreateSprintViewModel>();
             builder.Services.AddTransient<CreateTaskViewModel>();
+            builder.Services.AddTransient<SprintDetailsViewModel>();
+            builder.Services.AddTransient<TaskViewModel>();
+
 
 
             return builder;

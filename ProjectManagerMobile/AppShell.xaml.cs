@@ -22,6 +22,8 @@ namespace ProjectManagerMobile
             Routing.RegisterRoute(nameof(ProjectPage), typeof(ProjectPage));
             Routing.RegisterRoute(nameof(CreateSprintPage), typeof(CreateSprintPage));
             Routing.RegisterRoute(nameof(CreateTaskPage), typeof(CreateTaskPage));
+            Routing.RegisterRoute(nameof(SprintDetailsPage), typeof(SprintDetailsPage));
+            Routing.RegisterRoute(nameof(TaskPage), typeof(TaskPage));
         }
 
         protected override async void OnAppearing()
